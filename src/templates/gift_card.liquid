@@ -1,64 +1,76 @@
-{% comment %}
-  QR code is rendered in `#QrCode`
+{%- layout 'gift_card' -%}
 
-  `gift_card.pass_url` is true if apple wallet is enabled for the shop
-{% endcomment %}
-
-{% layout 'gift_card' %}
-
-<header role="banner">
-    <a href="{{ shop.url }}">
-      {{ shop.name }}
+<header class="Header Header--sidebar Header--initialized">
+  <div class="Header__Wrapper Header__Wrapper--center">
+    <a href="/" class="Header__LogoLink">
+      <span class="Heading u-h4">{{ shop.name }}</span>
     </a>
-  <div>{{ shop.url | escape }}</div>
+  </div>
 </header>
 
-<main class="giftcard {% if gift_card.expired or gift_card.enabled != true %} giftcard--disabled{% endif %}">
+<div class="GiftCard {% if gift_card.expired or gift_card.enabled != true %}GiftCard--disabled{% endif %}" data-section-id="gift-card" data-section-type="gift-card">
+  <div class="Container">
+    <div class="PageContent">
+      <h1 class="GiftCard__SubText Heading u-h1">{{ 'gift_card.issued.subtext' | t }}</h1>
 
-  <h1>{{ 'gift_cards.issued.subtext' | t }}</h1>
-  {% unless gift_card.enabled %}
-    <span class="giftcard-tag">{{ 'gift_cards.issued.disabled' | t }}</span>
-  {% endunless %}
+      {%- capture print_link -%}
+        <a href="#" id="PrintGiftCard" class="Link Link--underlineNative">{{ 'gift_card.issued.print' | t }}</a>
+      {%- endcapture -%}
 
-  {%- assign gift_card_expiry_date = gift_card.expires_on | date: "%d/%m/%y" -%}
+      <p class="GiftCard__Redeem">{{ 'gift_card.issued.redeem_html' | t: print_link: print_link }}</p>
 
-  {% if gift_card.expired and gift_card.enabled %}
-    <span class="giftcard-tag">{{ 'gift_cards.issued.expired' | t: expiry: gift_card_expiry_date }}</span>
-  {% endif %}
+      <div class="GiftCard__Wrapper">
+        {%- if gift_card.enabled and gift_card.expired == false -%}
+          <div class="Alert Alert--success">
+            {%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros: gift_card.currency -%}
+            <p>{{ 'gift_card.issued.initial_amount_html' | t: initial_amount: formatted_initial_value }}</p>
 
-  {% if gift_card.expired != true and gift_card.expires_on and gift_card.enabled %}
-    <span class="giftcard-tag giftcard-tag--active">{{ 'gift_cards.issued.active' | t: expiry: gift_card_expiry_date }}</span>
-  {% endif %}
+            {%- if gift_card.balance != gift_card.initial_value -%}
+              {%- assign formatted_balance = gift_card.balance | money_without_trailing_zeros: gift_card.currency -%}
+              <p>{{ 'gift_card.issued.remaining_balance_html' | t: balance: formatted_balance }}</p>
+            {%- endif -%}
 
-  <img src="{{ 'gift-card/card.jpg' | shopify_asset_url }}" alt="Gift card illustration">
+            {%- if gift_card.expires_on -%}
+              {%- assign gift_card_expiry_date = gift_card.expires_on | date: format: 'month_day_year' -%}
+              <p>{{ 'gift_card.issued.expires_on' | t: expiry: gift_card_expiry_date }}</p>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="Alert Alert--error">
+            {%- if gift_card.expired and gift_card.enabled -%}
+              {%- assign gift_card_expiry_date = gift_card.expires_on | date: format: 'month_day_year' -%}
+              <p>{{ 'gift_card.issued.expired' | t: expiry: gift_card_expiry_date }}</p>
+            {%- else -%}
+              <p>{{ 'gift_card.issued.disabled' | t }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
 
-  {% assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros: gift_card.currency %}
+        <div class="GiftCard__IllustrationWrapper">
+          <img class="GiftCard__Illustration" src="{{ 'gift-card/card.jpg' | shopify_asset_url }}" alt="{{ 'gift_card.issued.illustration_alt' | t }}">
+          <span class="GiftCard__CodeHolder Heading u-h6">{{ gift_card.code | format_code }}</span>
+        </div>
 
-  <h2>{{ 'gift_cards.issued.initial_value' | t: value: formatted_initial_value }}</h2>
+        <div id="QrCode" class="GiftCard__QrCode" data-identifier="{{ gift_card.qr_identifier }}"></div>
+      </div>
 
-  {% assign formatted_current_balance = gift_card.balance | money %}
+      <div class="ButtonGroup">
+        {%- if gift_card.pass_url -%}
+          <div class="ButtonGroup__Item">
+            <a href="{{ gift_card.pass_url }}" class="GiftCard__apple-wallet">
+              <img class="apple-wallet-image" src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_card.issued.add_to_apple_wallet' | t }}">
+            </a>
+          </div>
+        {%- endif -%}
 
-  {% if gift_card.balance != gift_card.initial_value %}
-    <p>{{ 'gift_cards.issued.remaining_html' | t: balance: formatted_current_balance }}</p>
-  {% endif %}
+        <div class="ButtonGroup__Item">
+          <a href="{{ shop.url }}" class="Button Button--primary" target="_blank">{{ 'gift_card.issued.shop_link' | t }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  {%- assign code_size = gift_card.code | format_code | size -%}
-  <span id="GiftCardDigits" class="giftcard__code" data-gift-card-digits>{{ gift_card.code | format_code }}</span>
-
-  <p>{{ 'gift_cards.issued.redeem' | t }}</p>
-
-  <a href="{{ shop.url }}" class="button" target="_blank">{{ 'gift_cards.issued.shop_link' | t }}</a>
-
-  <canvas id="QrCode" class="giftcard-qr" data-identifier="{{ gift_card.qr_identifier }}" data-gift-card-qr></canvas>
-
-  {% if gift_card.pass_url %}
-    <a href="{{ gift_card.pass_url }}" class="apple-wallet">
-      <img class="apple-wallet-image" src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}" width="120" height="40" alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}">
-    </a>
-  {% endif %}
-
-  <button id="PrintGiftCard" class="print-giftcard" data-gift-card-print>
-    {{ 'gift_cards.issued.print' | t }}
-  </button>
-
-</main>
+<script>
+  document.documentElement.style.setProperty('--header-height', document.getElementById('shopify-section-header').offsetHeight + 'px');
+</script>

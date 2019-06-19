@@ -1,148 +1,172 @@
-{%- comment -%}
-  This is a required section for the Shopify Theme Store.
-  It is available when you add "Blog posts" section in the Theme Editor.
+<section class="Section Section--spacingNormal" id="section-{{ section.id }}" data-section-type="article-list" data-section-id="{{ section.id }}">
+  <div class="Container">
+    {%- if section.settings.subheading != blank or section.settings.title != blank -%}
+      <header class="SectionHeader SectionHeader--center">
+        {%- if section.settings.subheading != blank -%}
+          <h3 class="SectionHeader__SubHeading Heading u-h6">{{ section.settings.subheading | escape }}</h3>
+        {%- endif -%}
 
-  Theme Store required settings
-  - Heading: title of the blog posts section
-  - Blog (which blog category to show in your store)
+        {%- if section.settings.title != blank -%}
+          <h2 class="SectionHeader__Heading Heading u-h1">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
 
-  Theme Store optional settings
-  - Number of posts to show
-  - Show author
-  - Show date
-{%- endcomment -%}
-<section>
-  {% if section.settings.title != blank %}
-    <h2>{{ section.settings.title | escape }}</h2>
-  {% endif %}
+    {%- assign show_placeholders = true -%}
 
-  {%- assign blog = blogs[section.settings.blog] -%}
+    <div class="ArticleListWrapper">
+      <div class="ArticleList Grid Grid--m Grid--center">
+        {%- assign block = section.blocks.first -%}
 
-  {%- comment -%}
-    Due to accessibility requirements, the Blog entries list functions
-    as a list of content items. Non-visual users will expect lists of content
-    to appear in a list structure, allowing for easier understanding and navigation of list items.
-  {%- endcomment -%}
-  <ul class="blog-post">
-    {% for article in blog.articles limit: section.settings.post_limit %}
-      <li class="blog-post__item">
-        {%- comment -%}
-          Due to accessibility requirements, we are regrouping all logical elements into the <a> element.
-          If a screen reader user is tabbing through the page, or browsing by links on the page with duplicated links,
-          they will appear identical which may lead to a confusing user experience.
-        {%- endcomment -%}
-        <a href="{{ article.url }}">
-          {% if article.image %}
-            {% include 'responsive-image' with
-                image: article.image,
-                max_width: 400,
-                max_height: 400
-            %}
-          {% endif %}
-          <h3>{{ article.title }}</h3>
-        </a>
+        {%- case block.type -%}
+          {%- when 'article' -%}
+            {%- for i in (1..3) -%}
+              {%- assign article_option = 'article_' | append: i -%}
+              {%- assign article = articles[block.settings[article_option]] -%}
 
-        <div>
-          {% if section.settings.blog_show_author %}
-            <span>{{ 'blogs.article.by_author' | t: author: article.author }}</span>
-          {% endif %}
+              {%- unless article == empty -%}
+                <div class="Grid__Cell 1/2--tablet 1/3--lap-and-up {% if forloop.index == 3 %}hidden-tablet{% endif %}">
+                  {%- include 'article-item', article: article -%}
+                </div>
 
-          {% if section.settings.blog_show_date %}
-            <p>
-              {{ article.published_at | time_tag: format: 'month_day_year' }}
-            </p>
-          {% endif %}
+                {%- assign show_placeholders = false -%}
+              {%- endunless -%}
+            {%- endfor -%}
 
-          <div>
-            {% if article.excerpt.size > 0 %}
-              {{ article.excerpt }}
-            {% else %}
-              {{ article.content | strip_html | truncate: 150 }}
-            {% endif %}
-          </div>
+          {%- when 'blog' -%}
+            {%- assign blog = blogs[block.settings.blog] -%}
 
-          {% if article.tags.size > 0 %}
-            {%- comment -%}
-              The Tag link list functions as a list of content items.
-              Non-visual users will expect lists of content to appear
-              in a list structure, allowing for easier understanding and navigation of list items.
-            {%- endcomment -%}
-            <ul aria-label="{{ 'blogs.article.tags' | t }}">
-              {% for tag in article.tags %}
-                <li><a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a></li>
-              {% endfor %}
-            </ul>
-          {% endif %}
+            {%- for article in blog.articles limit: 3 -%}
+              <div class="Grid__Cell 1/2--tablet 1/3--lap-and-up {% if forloop.index == 3 %}hidden-tablet{% endif %}">
+                {%- include 'article-item', article: article -%}
+              </div>
 
-          <a href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">{{ 'blogs.article.read_more' | t }}</a>
-        </div>
-      </li>
-    {% else %}
-      {% for i in (1..section.settings.post_limit) %}
-        <li class="blog-post__item">
-          <h3>
-            <a href="#">{{ 'homepage.onboarding.blog_title' | t }}</a>
-          </h3>
+              {%- assign show_placeholders = false -%}
+            {%- endfor -%}
+        {%- endcase -%}
 
-          {% if section.settings.blog_show_author %}
-            <span>{{ 'homepage.onboarding.blog_author' | t }}</span>
-          {% endif %}
+        {%- if show_placeholders -%}
+          {%- for i in (1..3) -%}
+            <div class="Grid__Cell 1/2--tablet 1/3--lap-and-up {% if forloop.index == 3 %}hidden-tablet{% endif %}">
+              <article class="ArticleItem">
+                {%- capture placeholder -%}{% cycle 'lifestyle-1', 'lifestyle-2' %}{%- endcapture -%}
 
-          <div>{{ 'homepage.onboarding.blog_excerpt' | t }}</div>
+                <div class="ArticleItem__ImageWrapper AspectRatio" style="--aspect-ratio: 1.7">
+                  {{ placeholder | placeholder_svg_tag: 'ArticleItem__Image PlaceholderBackground PlaceholderSvg--dark' }}
+                </div>
 
-          <a href="#">{{ 'blogs.article.read_more' | t }}</a>
-        </li>
-      {% endfor %}
-    {% endfor %}
-  </ul>
+                <div class="ArticleItem__Content">
+                  {%- if section.settings.show_category -%}
+                    <span class="ArticleItem__Category Heading u-h6 Text--subdued">{{ 'home_page.onboarding.article_category' | t }}</span>
+                  {%- endif -%}
+
+                  <h2 class="ArticleItem__Title Heading u-h2">
+                    <a href="#">{{ 'home_page.onboarding.article_name' | t }}</a>
+                  </h2>
+
+                  <p class="ArticleItem__Excerpt">{{ 'home_page.onboarding.article_excerpt' | t }}</p>
+
+                  <a href="#" class="ArticleItem__Link Link Link--underline">{{ 'blog.article.read_more' | t }}</a>
+                </div>
+              </article>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.button_text != blank -%}
+      <div class="SectionFooter">
+        <a href="{{ section.settings.button_link }}" class="Button Button--primary">{{ section.settings.button_text | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
 </section>
 
 {% schema %}
-  {
-    "name": "Blog posts",
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Heading",
-        "default": "Blog posts"
-      },
-      {
-        "id": "blog",
-        "type": "blog",
-        "label": "Blog"
-      },
-      {
-        "type": "range",
-        "id": "post_limit",
-        "label": "Posts",
-        "min": 3,
-        "max": 12,
-        "step": 3,
-        "default": 3
-      },
-      {
-        "type": "checkbox",
-        "id": "blog_show_author",
-        "label": "Show author",
-        "default": false
-      },
-      {
-        "type": "checkbox",
-        "id": "blog_show_date",
-        "label": "Show date",
-        "default": true
-      }
-    ],
-    "presets": [
-      {
-        "name": "Blog posts",
-        "category": "Blog",
-        "settings": {
-          "blog": "News",
-          "post_limit": 3
+{
+  "name": "Blog posts",
+  "class": "shopify-section--bordered",
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub-heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Blog posts"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show article category",
+      "info": "The first article's tag is used as the main category.",
+      "default": false
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View all articles"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "article",
+      "name": "Article",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article_1",
+          "label": "Article 1"
+        },
+        {
+          "type": "article",
+          "id": "article_2",
+          "label": "Article 2"
+        },
+        {
+          "type": "article",
+          "id": "article_3",
+          "label": "Article 3"
         }
-      }
-    ]
-  }
+      ]
+    },
+    {
+      "type": "blog",
+      "name": "Blog",
+      "settings": [
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Blog",
+      "name": "Blog posts",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "blog",
+          "settings": {
+            "blog": "news"
+          }
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
