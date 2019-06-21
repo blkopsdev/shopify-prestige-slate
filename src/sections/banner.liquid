@@ -1,0 +1,137 @@
+<section id="section-{{ section.id }}" class="Section banner" data-section-id="{{ section.id }}" data-section-type="banner">
+ 
+  <div class="banner__pattern">
+  
+    <div class="banner__pattern-container">
+      <header class="SectionHeader SectionHeader--center"><h2 class="SectionHeader__Heading Heading u-h1">{{ section.settings.title }}</h2></header>
+      {%- if section.settings.main_link != blank -%}
+      <a href="{{ section.settings.main_link }}" target="_blank">
+        {%- endif -%}
+      <ul>
+        <li><img src="{{ section.settings.image-1 | img_url : '200x' }}" alt=""></li>
+        <li><img src="{{ section.settings.image-2 | img_url : '200x' }}" alt=""></li>
+        <li><img src="{{ section.settings.image-3 | img_url : '200x' }}" alt=""></li>
+        <li><img src="{{ section.settings.image-4 | img_url : '200x' }}" alt=""></li>
+        <li><img src="{{ section.settings.image-5 | img_url : '200x' }}" alt=""></li>
+      </ul>
+		{%- if section.settings.main_link != blank -%}
+      </a>
+      {%- endif -%}
+      
+      <a href="{{ section.settings.qwe }}" class="stf-description-link">{{ section.settings.hero_link-copy }}</a>
+    </div>
+  </div>
+  
+</section>
+
+<style>
+  #section-{{ section.id }} .Timeline__ListItem {
+    color: {{ section.settings.text_color }};
+  }
+
+  .banner {
+		background: {{ section.settings.background_color_hero }}; 
+	}
+</style>
+
+{% schema %}
+{
+  "name": "Banner",
+  "class": "shopify-section--bordered",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color_hero",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Title",
+      "label": "Your title here"
+    },
+	{
+      "type": "url",
+      "id": "main_link", 
+      "label": "Banner Full link"
+    },
+    {
+      "type": "url",
+      "id": "qwe", 
+      "label": "Banner button link"
+    },
+    {
+      "type": "text",
+      "id": "hero_link-copy",
+      "default": "Shop now",
+      "label": "Your url copy here"
+    },
+    {
+      "type": "text",
+      "id": "hero_image-alt",
+      "default": "Your image Alt",
+      "label": "Your image Alt"
+    },
+    {
+      "type": "image_picker",
+      "id": "image-1",
+      "label": "Your image here"
+    },
+    {
+      "type": "image_picker",
+      "id": "image-2",
+      "label": "Your image here"
+    },
+    {
+      "type": "image_picker",
+      "id": "image-3",
+      "label": "Your image here"
+    },
+    {
+      "type": "image_picker",
+      "id": "image-4",
+      "label": "Your image here"
+    },
+    {
+      "type": "image_picker",
+      "id": "image-5",
+      "label": "Your image here"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "340 x 80px jpg recommended"
+        }, 
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>Share what your customers are saying about your products, your company...</p>",
+          "info": "For best results, keep the word count consistent in each quote."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Block",
+      "name": "Banner",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {}
+        } 
+      ]
+    }
+  ]
+}
+{% endschema %}

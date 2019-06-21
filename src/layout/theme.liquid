@@ -1,12 +1,12 @@
 <!doctype html>
+<html lang="en-us">
 
-<html class="no-js" lang="{{ shop.locale }}">
-  <head>
     <meta charset="utf-8"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <meta name="theme-color" content="{{ settings.accent_color }}">
-
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+   
     <title>
       {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
     </title>
@@ -16,18 +16,34 @@
     {%- endif -%}
 
     <link rel="canonical" href="{{ canonical_url }}">
-
+	<link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" />
+	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.com' }}" hreflang="en-us" />
+	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" hreflang="en-gb" />
+  
+	<style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
+	<script>(function(g,e,o,t,l,y,s){
+	s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
+	var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
+	y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
+	l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
+	setTimeout(function(){s();}, 3000);})(document,'script','style','head');
+	</script>
+  
     {%- if settings.favicon -%}
       <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
     {%- endif -%}
 
     {% include 'social-meta-tags' %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 
     {{ content_for_header }}
+	{%- include 'bold-common' -%}
 
     <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
 
     <script>
+      
       // This allows to expose several variables to the global scope, to be used in scripts
       window.theme = {
         template: {{ template.name | json }},
@@ -37,7 +53,6 @@
         currencyConversionEnabled: {{ settings.currency_conversion_enabled | json }},
         currencyConversionMoneyFormat: {{ settings.currency_conversion_money_format | json }},
         currencyConversionRoundAmounts: {{ settings.currency_conversion_round_amounts | json }},
-        productImageSize: {{ settings.product_image_size | json }},
         searchMode: {{ settings.search_mode | json }},
         showPageTransition: {{ settings.show_page_transition | json }},
         showElementStaggering: {{ settings.show_element_staggering | json }},
@@ -75,13 +90,18 @@
         document.documentElement.className += (window.matchMedia('(-moz-touch-enabled: 1), (hover: none)')).matches ? ' no-supports-hover' : ' supports-hover';
       }());
 
-      // This code is done to force reload the page when the back button is hit (which allows to fix stale data on cart, for instance)
-      if (performance.navigation.type === 2) {
-        location.reload(true);
-      }
+      window.onpageshow = function (event) {
+        if (event.persisted) {
+          window.location.reload();
+        }
+      };
+
+      
     </script>
 
     <script src="{{ 'lazysizes.min.js' | asset_url }}" async></script>
+
+    {% comment %} Yotpo content removed from here {% endcomment %}
 
     {% if settings.currency_conversion_enabled %}
       <script src="//cdn.shopify.com/s/javascripts/currencies.js" defer></script>
@@ -92,15 +112,58 @@
       <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
     {%- endif -%}
 
-    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?unknown=polyfill&features=fetch,Element.prototype.closest,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,Object.assign,CustomEvent,IntersectionObserver,IntersectionObserverEntry" defer></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Element.prototype.closest,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,Object.assign,CustomEvent,IntersectionObserver,IntersectionObserverEntry" defer></script>
     <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
     {% include 'microdata-schema' %}
-  </head>
+    
+  
+  {% include 'shogun-head' %}
 
-  <body class="prestige--v4 {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }}">
+<!-- Pinterest Tag -->
+<script>
+!function(e){if(!window.pintrk){window.pintrk = function () {
+window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
+      n=window.pintrk;n.queue=[],n.version="3.0";var
+      t=document.createElement("script");t.async=!0,t.src=e;var
+      r=document.getElementsByTagName("script")[0];
+      r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+pintrk('load', '2614248711405', {em: '<user_email_address>'});
+pintrk('page');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt=""
+      src="https://ct.pinterest.com/v3/?tid=2614248711405&pd[em]=<hashed_email_address>&noscript=1" />
+</noscript>
+<!-- end Pinterest Tag -->
+  
+  <!-- Pinterest Events -->
+<script>
+
+//addtocart event
+
+window.addEventListener('DOMContentLoaded', function() {
+
+if (document.getElementsByClassName('ProductForm__AddToCart Button Button--secondary Button--full cartbutton')) {
+
+var ATCbutton = document.getElementsByClassName('ProductForm__AddToCart Button Button--secondary Button--full cartbutton');
+
+for (let i = 0; i < ATCbutton.length; i++) {
+
+ATCbutton[i].addEventListener('click', function() {pintrk('track', 'addtocart')})}}});
+
+</script>
+
+<!-- End Pinterest Tag -->
+
+	{{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+	{{ shop.metafields.okendo.StyleCustomizations }}
+</head>
+  
+  <body class="prestige--v1 {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }}">
+    
     <a class="PageSkipLink u-visually-hidden" href="#main">{{ 'header.navigation.skip_to_content' | t }}</a>
     <span class="LoadingBar"></span>
     <div class="PageOverlay"></div>
@@ -123,5 +186,140 @@
 
       {% section 'footer' %}
     </div>
-  </body>
+
+    {%- comment -%}
+    --------------------------------------------------------------------------------------------------------------------
+    SEARCH FORM (available globally)
+    --------------------------------------------------------------------------------------------------------------------
+    {%- endcomment -%}
+
+    <div id="Search" class="Search Modal Modal--fullScreen" aria-hidden="true" data-scrollable>
+      <div class="Search__SearchBar">
+        <form action="/search" name="GET" role="search" class="Search__Form">
+          <input type="search" class="Search__Input Heading" name="q" autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="{{ 'search.general.input_placeholder' | t }}" autofocus>
+          <input type="hidden" name="type" value="product">
+        </form>
+
+        <button class="Search__Close Link Link--primary" data-action="close-modal">{% include 'icon' with 'close' %}</button>
+      </div>
+
+      <div class="Search__Results">
+        {%- if settings.search_mode != 'product' -%}
+          <div class="PageLayout PageLayout--breakLap">
+            <div class="PageLayout__Section"></div>
+            <div class="PageLayout__Section PageLayout__Section--secondary"></div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  
+<!-- google dynamic remarketing tag for theme.liquid StoreYa Start -->
+{% if template contains 'product' %}
+		<script type="text/javascript">          
+		var variant_ids_array=[];
+		var variant_ids_string ='{{product.variants | map: 'id' | join: ","}}'; 
+		if( variant_ids_string != null)
+		{
+			if (variant_ids_string.indexOf(',') > -1)
+			{
+				variant_ids_array = variant_ids_string.split(','); 
+			}
+			else           
+				variant_ids_array = variant_ids_string;                           
+		}     
+
+		var google_tag_params = {
+		dynx_itemid: {{ product.id }},
+		dynx_itemid2: variant_ids_array,
+		dynx_pagetype: 'offerdetail',
+		dynx_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
+		};
+	</script>
+{% elsif template contains 'collection' %}
+	<script type="text/javascript">
+		var google_tag_params = {
+			dynx_pagetype: 'searchresults'
+		};
+	</script>
+{% elsif template contains 'cart' %}
+	<script type="text/javascript">
+	var id = [];
+	var id2 = [];
+	{% for item in cart.items %}
+		id.push('{{item.product_id}}');
+		id2.push('{{item.variant.id}}');
+	{% endfor %}
+	
+		var google_tag_params = {
+			dynx_itemid: id,
+			dynx_itemid2: id2,
+			dynx_pagetype: 'conversionintent',
+			dynx_totalvalue: parseFloat('{{ cart.total_price | money_without_currency | remove: ","}}')
+		};
+	</script>
+{% elsif template contains 'search' %}
+	<script type="text/javascript">
+		var google_tag_params = {
+			dynx_pagetype: 'searchresults'
+	};
+	</script>
+{% elsif template contains 'index' %}
+	<script type="text/javascript">
+		var google_tag_params = {
+			dynx_pagetype: 'home'
+		};
+	</script>
+{% else %}
+	<script type="text/javascript">
+		var google_tag_params = {
+			dynx_pagetype: 'other'
+		};
+	</script>
+{% endif %}
+<!-- Google Code for Remarketing Tag -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 826194626;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/826194626/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+<script  type="text/javascript">
+  $(document).ajaxSuccess(function(event, xhr, settings) {
+	if (settings.url == "/cart/add.js" || settings.url == "/cart/update.js"){	  
+	  if(typeof google_tag_params !== "undefined"){
+		
+		$.getJSON("/cart.js", function(data) {
+			var ids = []; var id2s = [];
+			if (!data.items || !data.items.length) return;
+
+			for (var i = 0; i < data.items.length; i++) {
+				item = data.items[i];
+				ids.push(item.product_id);
+				id2s.push(item.variant_id);
+			}
+			
+			google_tag_params.dynx_pagetype = "conversionintent";
+			google_tag_params.dynx_itemid = ids;
+			google_tag_params.dynx_itemid2 = id2s;
+			window.google_trackConversion({
+			 google_conversion_id: 826194626,
+			 google_custom_params: window.google_tag_params,
+			 google_remarketing_only: true});
+			});
+	  }}});
+</script>
+<!-- google dynamic remarketing tag for theme.liquid StoreYa End -->{%- include 'bold-currency-converter' -%}
+<!--Gorgias Chat Widget Start--><div id="gorgias-chat">{% if customer %}<script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% else %}<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% endif %}<script src="https://config.gorgias.io/production/QBGoD2eZAp7djqlX/chat/bVpA37lD1W7J5oEd.js" defer></script></div><!--Gorgias Chat Widget End--><!-- Begin ReCharge code -->
+{% include 'subscription-theme-footer' %}
+<!-- End ReCharge code -->
+</body>
 </html>
+

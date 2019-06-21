@@ -24,13 +24,13 @@
             {%- capture section_inner -%}
               {%- if block.settings.subheading != blank or block.settings.heading != blank -%}
                 <header class="Timeline__Header SectionHeader SectionHeader--center">
-                  {%- if block.settings.subheading != blank -%}
-                    <h3 class="SectionHeader__SubHeading Heading u-h6">{{ block.settings.subheading | escape }}</h3>
-                  {%- endif -%}
-
                   {%- if block.settings.heading != blank -%}
                     <h2 class="SectionHeader__Heading Heading u-h1">{{ block.settings.heading | escape }}</h2>
                   {%- endif -%}
+                  
+                  {%- if block.settings.subheading != blank -%}
+                    <h3 class="SectionHeader__SubHeading Heading u-h6">{{ block.settings.subheading | escape }}</h3>
+                  {%- endif -%} 
 
                   {%- if block.settings.content != blank -%}
                     <div class="SectionHeader__Description Rte">
@@ -92,7 +92,7 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image",
-          "info": "1200 x 1200px .jpg recommended"
+          "info": "1200 x 1200px jpg recommended"
         },
         {
           "type": "checkbox",

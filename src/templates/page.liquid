@@ -1,3 +1,4 @@
+{% include 'shogun-products', content: page %}
 <div class="Container">
   <header class="PageHeader">
     <div class="SectionHeader SectionHeader--center">
@@ -5,7 +6,8 @@
     </div>
   </header>
 
-  <div class="PageContent PageContent--narrow Rte">
+  <div class="PageContent Rte">
+  {% comment %} <div class="PageContent PageContent--narrow Rte"> {% endcomment %}
     {{ page.content }}
   </div>
 </div>

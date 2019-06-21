@@ -25,7 +25,7 @@
         <div class="ProductList ProductList--grid {% if paginate.pages > 1 %}ProductList--removeMargin{% endif %} Grid" data-mobile-count="{{ mobile_items_per_row }}" data-desktop-count="{{ desktop_items_per_row }}">
           {%- for product in collection.products -%}
             <div class="Grid__Cell 1/{{ mobile_items_per_row }}--phone 1/{{ tablet_items_per_row }}--tablet-and-up 1/{{ desktop_items_per_row }}--{% if section.settings.filter_position == 'drawer' %}lap-and-up{% else %}desk{% endif %}">
-              {%- include 'product-item', show_product_info: true, show_vendor: section.settings.show_vendor, show_color_swatch: section.settings.show_color_swatch, show_labels: true -%}
+              {%- include 'product-item', show_product_info: true, show_color_swatch: section.settings.show_color_swatch, show_labels: true -%}
             </div>
           {%- endfor -%}
         </div>
@@ -91,13 +91,13 @@
       {%- if section.settings.show_collection_image and collection.image and collection.template_suffix != 'no-image' -%}
         <div class="FlexboxIeFix">
         <header class="PageHeader PageHeader--withBackground {% if section.settings.collection_image_size != 'normal' %}PageHeader--{{ section.settings.collection_image_size }}{% endif %}" style="background: url({{ collection.image | img_url: '1x1', format: 'jpg' }})">
-          <div class="PageHeader__ImageWrapper Image--lazyLoad Image--fadeIn {% if section.settings.apply_overlay %}Image--contrast{% endif %}"
+          <div class="PageHeader__ImageWrapper Image--lazyLoad Image--fadeIn Image--contrast"
                data-optimumx="1.2"
-               data-bgset="{{ collection.image | img_url: 'x600' }} 600w, {{ collection.image | img_url: '800x' }} 800w, {{ collection.image | img_url: '1200x' }} 1200w, {{ collection.image | img_url: '1400x' }} 1400w, {{ collection.image | img_url: '1600x' }} 1600w">
+               data-bgset="{{ collection.image | img_url: '600x' }} 600w, {{ collection.image | img_url: '800x' }} 800w, {{ collection.image | img_url: '1200x' }} 1200w, {{ collection.image | img_url: '1400x' }} 1400w, {{ collection.image | img_url: '1600x' }} 1600w">
           </div>
 
           <noscript>
-            <div class="PageHeader__ImageWrapper {% if section.settings.apply_overlay %}Image--contrast{% endif %}" style="background-image: url({{ collection.image | img_url: '800x' }})"></div>
+            <div class="PageHeader__ImageWrapper Image--contrast" style="background-image: url({{ collection.image | img_url: '800x' }})"></div>
           </noscript>
 
           <div class="Container">
@@ -310,16 +310,13 @@
                         {%- for tag in collection.all_tags -%}
                           {%- assign tag_parts = tag | split: '_' -%}
 
-                          {%- if tag_parts.size != 2 or tag_parts.first != group -%}
+                          {%- if tag_parts.first != group -%}
                             {%- continue -%}
                           {%- endif -%}
 
                           {%- if show_color_swatch -%}
                             <li class="HorizontalList__Item">
-                              {%- assign color_swatch_name = tag_parts.last | handle | append: '.png' -%}
-                              {%- assign color_swatch_image = images[color_swatch_name] -%}
-
-                              <button type="button" class="ColorSwatch {% if current_tags contains tag %}is-active{% endif %}" data-tag="{{ tag | handle }}" data-action="toggle-tag" data-tooltip="{{ tag_parts.last | escape }}" style="background-color: {{ tag_parts.last | replace: ' ', '' | downcase }}; {% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }}){% endif %}">
+                              <button type="button" class="ColorSwatch {% if current_tags contains tag %}is-active{% endif %}" data-tag="{{ tag | handle }}" data-action="toggle-tag" data-tooltip="{{ tag_parts.last | escape }}" style="background-color: {{ tag_parts.last | split: ' ' | last | handle }}; background-image: url({{ tag_parts.last | handle | append: '.png' | asset_url }})">
                                 <span class="u-visually-hidden">{{ tag_parts.last }}</span>
                               </button>
                             </li>
@@ -366,24 +363,56 @@
 
       {%- if section.settings.show_sort_by -%}
         <div id="collection-sort-popover" class="Popover" aria-hidden="true">
+          {%- assign current_sort_by = collection.sort_by | default: collection.default_sort_by -%}
+
           <header class="Popover__Header">
             <button class="Popover__Close Icon-Wrapper--clickable" data-action="close-popover">{% include 'icon' with 'close' %}</button>
             <span class="Popover__Title Heading u-h4">{{ 'collection.sorting.title' | t }}</span>
           </header>
 
           <div class="Popover__Content">
-            <div class="Popover__ValueList" data-scrollable>
-              {% assign collection_sort_by = collection.sort_by | default: collection.default_sort_by %}
+            <div class="Popover__ValueList">
+              {%- assign sort_by_list = 'manual,price-ascending,price-descending,title-ascending,title-descending,created-ascending,created-descending,best-selling' | split: ',' -%}
 
-              {%- for option in collection.sort_options -%}
-                <button class="Popover__Value {% if option.value == collection_sort_by %}is-selected{% endif %} Heading Link Link--primary u-h6" data-value="{{ option.value }}" data-action="select-value">
-                  {{ option.name }}
+              {%- for sort_by in sort_by_list -%}
+                <button class="Popover__Value {% if current_sort_by == sort_by %}is-selected{% endif %} Heading Link Link--primary u-h6" data-value="{{ sort_by }}" data-action="select-value">
+                  {{- 'collection.sorting.' | append: sort_by | replace: '-', '_' | t -}}
                 </button>
               {%- endfor -%}
             </div>
           </div>
         </div>
       {%- endif -%}
+      
+
+      {% comment %} <section class="filter-bar filter-bar--collection {{ section_settings.collection.url }}">
+      <div class="filter-bar__container">
+        <div class="filter-bar__item filter-bar__item--active">
+          <a href="{{ section.settings.filter-1 }}" class="filter-bar__item-link">
+            <svg id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css">.st0{fill:none;stroke:#000000;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}.st1{fill:none;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}</style><g><path class="st0" d="M213.4,143c24.2,3.3,48.4,6.7,72.6,10c9.5,1.3,19.1,2.6,28.6,4 M331.6,159c0.3,0,0.7,0.1,1,0.1 M350,161.9   c7,1,14,1.9,21,2.9c18.7,2.6,37.4,5.1,56,7.7c6,0.8,9.7,5.1,9.7,11.2c0,30,0.2,60-0.1,90.1c-0.2,24.6-19.5,43.8-44.2,43.8   c-39.7,0.1-79.3,0.1-119,0.1 M245.6,317.6c-22.3,0-44.7,0-67,0c-7.2,0-14.1-1.6-20.5-4.8c-0.6-0.3-1.4-0.5-2.2-0.9   c0,10.9-0.7,21.5,0.2,32c0.9,10.9,10,18.6,21.1,19.2c1.8,0.1,3.5,0.1,5.3,0.1c30.3,0,52.8,0,83.1,0 M281.6,363.3c0.4,0,0.8,0,1.1,0    M299.1,363.3c27,0,54,0,81,0c12.2,0,22.9,3.9,30.9,11 M421.8,389.1c0.5,1.2,1,2.4,1.5,3.6c9,25.1-7.3,52.8-33.7,57.2   c-0.7,0.1-1.4,0.5-2.1,0.7c-3.5,0-7.1,0-10.6,0c-0.7-0.2-1.4-0.6-2.1-0.7c-26.3-4.6-42.4-31.6-33.7-56.8c0.9-2.6,2-5.1,3-7.7   c-32.1,0-64,0-96.2,0c0.5,1.1,0.8,1.7,1.1,2.4c10.9,22.6,1.2,49.2-21.8,59.1c-3.7,1.6-7.6,2.5-11.4,3.7c-3.8,0-7.6,0-11.4,0   c-0.7-0.2-1.4-0.6-2.1-0.7c-23.5-4.2-39.3-26.5-35.1-50.1c0.9-5.2,3-10.1,4.7-15.3c-1-0.2-2.5-0.6-4-0.9c-7-1.7-13.3-4.9-18.6-9.7   c-4-3.6-7.2-7.6-9.6-12 M134.1,340.7c0-0.7,0-1.5,0-2.2c0.1-42.9,0.1-85.9,0.1-128.8 M134.1,191.1c0-27.5,0-55,0.1-82.6   c0-3.3-1-4.8-4.1-6.1c-12.9-5.3-25.7-10.8-38.6-16.2 M79.7,80.9c-1.7-1.2-3.1-2.8-3.9-5.1c-2.1-5.9,0.4-10.7,7.6-14.4   c1.8,0,3.5,0,5.3,0c13.6,5.8,27.1,11.6,40.7,17.4c5.6,2.4,11.2,4.7,16.8,7c7.9,3.3,9.4,5.6,9.4,14c0,10.3,0,20.5,0,30.8   c0,1.4,0,2.7,0,4.3c11.1,1.5,22.1,3.1,32.9,4.6"/><path class="st1" d="M382.1,385c-12,0.1-22.1,10.2-21.9,22.1c0.2,11.9,10,21.6,21.9,21.7c12.1,0.1,22-9.8,22-21.9   C404.2,394.8,394.3,385,382.1,385z"/><path class="st1" d="M210,428.8c12.2-0.1,21.9-9.9,21.8-22.1c-0.1-12.2-10-21.9-22.1-21.7c-12,0.2-21.6,9.9-21.7,21.9   C188,419,197.9,428.9,210,428.8z"/></g></svg>
+            {{ section.settings.filter-1-text }}
+          </a>
+        </div>
+        <div class="filter-bar__item">
+          <a href="{{ section.settings.filter-2 }}" class="filter-bar__item-link">
+            <svg data-name="Layer 24" id="Layer_24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><title/><path d="M75.69,20c-6.53,0-11,3.74-15.52,8.38a22.29,22.29,0,0,0-13.34-5.15,18.23,18.23,0,0,0-11.92,3.28L33.44,25,29.51,29,62.13,61.6l3.94-3.94-1.47-1.47a18.28,18.28,0,0,0,3.28-11.92,21.7,21.7,0,0,0-4-11.57c3.87-4,7.26-6.71,11.79-6.71H89V20ZM62.13,58.77,32.34,29l1.11-1.11L63.24,57.67Zm1-4L36.35,27.95a16.4,16.4,0,0,1,10.39-2.71A20.18,20.18,0,0,1,60,30.92l.16.16a20.17,20.17,0,0,1,5.73,13.29A16.4,16.4,0,0,1,63.16,54.76ZM87,24H75.69c-5.18,0-8.85,2.87-13,7l-1.09-1.18c4.22-4.29,8.3-7.85,14-7.85H87ZM40.15,54.75a4.08,4.08,0,1,0-2.88-1.19A4.07,4.07,0,0,0,40.15,54.75ZM38.68,49.2a2.08,2.08,0,1,1,0,2.94A2.07,2.07,0,0,1,38.68,49.2ZM34.94,61.66a4.08,4.08,0,1,0-2.89,1.2A4.09,4.09,0,0,0,34.94,61.66ZM30.58,57.3a2.08,2.08,0,1,1,2.94,2.94,2.13,2.13,0,0,1-2.94,0A2.08,2.08,0,0,1,30.58,57.3ZM21.06,64a4.08,4.08,0,1,0,5.77,0A4.05,4.05,0,0,0,21.06,64Zm4.36,4.36A2.08,2.08,0,1,1,26,66.88,2.08,2.08,0,0,1,25.42,68.35Zm5.42-22.92a4.08,4.08,0,1,0-2.89-1.19A4.07,4.07,0,0,0,30.83,45.43Zm-1.47-5.55a2.08,2.08,0,1,1-.61,1.47A2.08,2.08,0,0,1,29.36,39.88ZM25.61,52.34a4.09,4.09,0,1,0-2.89,1.19A4.09,4.09,0,0,0,25.61,52.34ZM21.26,48a2.08,2.08,0,1,1,0,2.94A2.08,2.08,0,0,1,21.26,48Zm-6.63,5.5a4.08,4.08,0,1,0,2.89,1.2A4.05,4.05,0,0,0,14.62,53.48ZM16.1,59a2.13,2.13,0,0,1-2.94,0,2.08,2.08,0,1,1,2.94,0Zm30.5-1.92a4.08,4.08,0,1,0,5.77,0A4.09,4.09,0,0,0,46.59,57.1Zm4.36,4.36a2.08,2.08,0,1,1,0-2.94A2.09,2.09,0,0,1,50.95,61.46ZM41.37,64a4.08,4.08,0,1,0,2.89,1.2A4.05,4.05,0,0,0,41.37,64Zm1.47,5.55a2.13,2.13,0,0,1-2.94,0,2.08,2.08,0,1,1,2.94,0Zm-9.58,2.55a4.08,4.08,0,1,0,2.89,1.2A4.05,4.05,0,0,0,33.27,72.12Zm1.47,5.55a2.13,2.13,0,0,1-2.94,0,2.08,2.08,0,1,1,2.94,0Z"/></svg>
+            {{ section.settings.filter-2-text }}
+          </a>
+        </div>
+        <div class="filter-bar__item">
+          <a href="{{ section.settings.filter-3 }}" class="filter-bar__item-link">
+            <svg enable-background="new 0 0 96 96" id="Layer_1" version="1.1" viewBox="0 0 96 96" width="96px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="   M42.569,55.587v17.63l9.72-5.725V43.75c5.875-6.647,13.152-17.138,13.67-17.656c0.761-0.761,0.514-1.974-0.924-1.974   s-33.796,0-35.385,0c-1.588,0-1.319,1.199-0.613,1.907c0.477,0.476,7.622,10.814,13.532,17.502v7.392" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/><line fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" x1="42.569" x2="52.397" y1="43.529" y2="43.529"/></g></svg>
+            {{ section.settings.filter-3-text }}
+          </a>
+        </div>
+        <div class="filter-bar__item">
+          <a href="{{ section.settings.filter-4 }}" class="filter-bar__item-link">
+            <svg id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M256,238c9.9,0,18,8.1,18,18s-8.1,18-18,18s-18-8.1-18-18S246.1,238,256,238 M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32   c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"/><path d="M128.4,238c9.9,0,18,8.1,18,18s-8.1,18-18,18c-9.9,0-18-8.1-18-18S118.5,238,128.4,238 M128.4,224c-17.7,0-32,14.3-32,32   s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"/><path d="M384,238c9.9,0,18,8.1,18,18s-8.1,18-18,18s-18-8.1-18-18S374.1,238,384,238 M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32   s32-14.3,32-32S401.7,224,384,224L384,224z"/></g></svg>
+            {{ section.settings.filter-4-text }}
+          </a>
+        </div>
+      </div>
+    </section> {% endcomment %}
 
       {%- comment -%}
       --------------------------------------------------------------------------------------------------------------------
@@ -451,22 +480,9 @@
     },
     {
       "type": "checkbox",
-      "id": "apply_overlay",
-      "label": "Apply overlay on image",
-      "info": "This can improve text visibility.",
-      "default": true
-    },
-    {
-      "type": "checkbox",
       "id": "show_color_swatch",
       "label": "Show color swatch",
       "info": "Some colors appear white? [Learn more](http://support.maestrooo.com/article/80-product-uploading-custom-color-for-color-swatch).",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_vendor",
-      "label": "Show vendor",
       "default": false
     },
     {

@@ -1,0 +1,117 @@
+{%- assign product = all_products[section.settings.product] -%}
+
+{%- capture section_settings -%}
+{
+  "enableHistoryState": false,
+  "usePlaceholder": {% if product == empty %}true{% else %}false{% endif %},
+  "showInventoryQuantity": {% if section.settings.show_inventory_quantity %}true{% else %}false{% endif %},
+  "showPaymentButton": {{ section.settings.show_payment_button | json }},
+  "useAjaxCart": {% if settings.cart_type == 'drawer' %}true{% else %}false{% endif %}
+}
+{%- endcapture -%}
+
+<section class="Section Section--spacingNormal" data-section-id="{{ section.id }}" data-section-type="featured-product" data-section-settings='{{ section_settings }}'>
+  <div class="Container"> 
+
+    <div class="FeaturedProduct {% if section.settings.show_description == false or product.description == blank %}FeaturedProduct--center{% endif %}">
+      {%- if product != empty -%}
+        {%- comment -%}
+        --------------------------------------------------------------------------------------------------------------------
+        PRODUCT GALLERY
+        --------------------------------------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        {%- if product.images.size > 0 -%}
+          <a href="{{ product.url }}" class="FeaturedProduct__Gallery">
+            {%- include 'image-size', sizes: '200,300,400,600,700,800,900,1000', image: product.featured_image -%}
+
+            <div class="AspectRatio AspectRatio-custom" style="max-width: {{ product.featured_image.width }}px; --aspect-ratio: {{ product.featured_image.aspect_ratio }}">
+              {% assign image_url = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+              <img class="Image--lazyLoad Image--fadeIn" data-src="{{ image_url }}" data-widths="[{{ supported_sizes }}]" data-sizes="auto" alt="{{ product.featured_image.alt | escape }}">
+              <span class="Image__Loader"></span>
+
+              <noscript>
+                <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.featured_image.alt | escape }}">
+              </noscript>
+            </div>
+          </a>
+        {%- endif -%}
+
+        <div class="FeaturedProduct__Info">
+          {%- include 'product-meta', show_description: true -%} 
+          {%- include 'product-form' -%}
+
+          <div class="FeaturedProduct__ViewWrapper">
+            <a href="{{ product.url }}" class="Link Link--underline">{{ 'home_page.featured_product.view_product' | t }}</a>
+          </div>
+        </div>
+      {%- else -%}
+        {%- comment -%}
+        --------------------------------------------------------------------------------------------------------------------
+        PLACEHOLDER WHEN NO PRODUCT IS SELECTED
+        --------------------------------------------------------------------------------------------------------------------
+        {%- endcomment -%}
+
+        <div class="FeaturedProduct__Gallery">
+          {{- 'product-1' | placeholder_svg_tag -}}
+        </div>
+
+        <div class="FeaturedProduct__Info">
+          <div class="ProductMeta">
+            {%- if section.settings.show_vendor -%}
+              <h2 class="ProductMeta__Vendor Heading u-h6">{{ 'home_page.onboarding.vendor_title' | t }}</h2>
+            {%- endif -%}
+
+            <h1 class="ProductMeta__Title Heading u-h2">{{ 'home_page.onboarding.product_title' | t }}</h1>
+            
+            <div class="ProductMeta__PriceList Heading">
+              <span class="ProductMeta__Price Price Text--subdued u-h4" data-money-convertible>{{ 4500 | money_without_trailing_zeros }}</span>
+            </div>
+
+            {%- if section.settings.show_description -%}
+              <div class="ProductMeta__Description Rte">
+                {{ 'home_page.onboarding.product_description' | t }}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="ProductForm">
+            {%- if section.settings.show_inventory_quantity -%}
+              <p class="ProductForm__Inventory Text--subdued">
+                {%- if section.settings.inventory_quantity_threshold == 0 -%}
+                  {{- 'product.form.inventory_quantity_count' | t: count: 5 -}}
+                {%- else -%}
+                  {{- 'product.form.low_inventory_quantity_count' | t: count: section.settings.inventory_quantity_threshold -}}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+
+            <button type="button" class="ProductForm__AddToCart Button Button--primary Button--full">
+              <span class="Button__PrimaryState">
+                  <span>{{ 'product.form.add_to_cart' | t }}</span>
+                  <span class="Button__SeparatorDot"></span>
+                  <span data-money-convertible>{{ 4500 | money_without_trailing_zeros }}</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="FeaturedProduct__ViewWrapper">
+            <a href="#" class="Link Link--underline">{{ 'home_page.featured_product.view_product' | t }}</a>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%}
+  --------------------------------------------------------------------------------------------------------------------
+  OFF SCREEN ELEMENTS
+  --------------------------------------------------------------------------------------------------------------------
+  {%- endcomment -%}
+
+  {{- product_popovers -}}
+  {{- product_modals -}}
+</section>
+
+ 

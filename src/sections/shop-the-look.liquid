@@ -147,7 +147,7 @@
                 {%- assign products_count = products_count | plus: 1 -%}
 
                 <div class="ShopTheLook__ProductItem {% unless section.settings.show_mobile_product_info %}ShopTheLook__ProductItem--withHiddenInfo{% endunless %} Carousel__Cell {% if forloop.first %}is-selected{% endif %}" data-product-url="{{ product.url | escape }}">
-                  {% include 'product-item', product: product, show_product_info: true, show_vendor: false, show_price_on_hover: false, show_color_swatch: false, show_labels: false %}
+                  {% include 'product-item', product: product, show_product_info: true, show_price_on_hover: false, show_color_swatch: false, show_labels: false %}
                 </div>
               {%- endfor -%}
             {%- endif -%}
@@ -248,7 +248,7 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image",
-          "info": "975 x 1185px .jpg recommended (vertical image) or 1200 x 1200px .jpg recommended (square image)."
+          "info": "975 x 1185px jpg recommended (vertical image) or 1200 x 1200px jpg recommended (square image)."
         },
         {
           "type": "select",

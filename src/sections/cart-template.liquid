@@ -15,7 +15,7 @@
 
         {%- if settings.cart_show_free_shipping_threshold -%}
           {%- assign threshold_in_cents = settings.cart_free_shipping_threshold | times: 100 -%}
-          {%- capture remaining_amount -%}<span>{{ cart.total_price | minus: threshold_in_cents | abs | money_without_trailing_zeros }}</span>{%- endcapture -%}
+          {%- capture remaining_amount -%}<span><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_total" style="display:none !important;"></span>{{ cart.total_price | minus: threshold_in_cents | abs | money_without_trailing_zeros }}</span>{%- endcapture -%}
 
           <p class="Text--subdued">{{- 'cart.general.free_shipping_remaining_html' | t: remaining_amount: remaining_amount -}}</p>
         {%- endif -%}
@@ -36,7 +36,7 @@
               {%- if cart.total_price >= threshold_in_cents -%}
                 {{- 'cart.general.free_shipping' | t -}}
               {%- else -%}
-                {%- capture remaining_amount -%}<span>{{ cart.total_price | minus: threshold_in_cents | abs | money_without_trailing_zeros }}</span>{%- endcapture -%}
+                {%- capture remaining_amount -%}<span><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_total_2" style="display:none !important;"></span>{{ cart.total_price | minus: threshold_in_cents | abs | money_without_trailing_zeros }}</span>{%- endcapture -%}
                 {{- 'cart.general.free_shipping_remaining_html' | t: remaining_amount: remaining_amount -}}
               {%- endif -%}
             </p>
@@ -45,6 +45,7 @@
       </header>
 
       <div class="PageContent">
+<div id="bold-cart-msg"></div>
         <form action="/cart" method="POST" class="Cart Cart--expanded" novalidate>
           <input type="hidden" name="attributes[collection_mobile_items_per_row]" value="">
           <input type="hidden" name="attributes[collection_desktop_items_per_row]" value="">
@@ -62,7 +63,7 @@
             <div class="Cart__Recap">
               {%- capture shipping_and_taxes_notice -%}{{ 'cart.general.shipping_and_taxes_notice' | t }}{%- endcapture -%}
 
-              <span class="Cart__Total Heading u-h6">{{ 'cart.general.total' | t }}: <span data-money-convertible>{{ cart.total_price | money_without_trailing_zeros }}</span></span>
+              <span class="Cart__Total Heading u-h6">{{ 'cart.general.total' | t }}: <span data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_total_3" style="display:none !important;"></span>{{ cart.total_price | money_without_trailing_zeros }}</span></span>
 
               {%- if shipping_and_taxes_notice != blank -%}
                 <span class="Cart__Taxes Text--subdued">{{ shipping_and_taxes_notice }}</span>
