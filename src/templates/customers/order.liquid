@@ -27,7 +27,7 @@
       <p class="SectionHeader__Description">{{ 'customer.order.placed_at' | t: date: placed_at }}</p>
 
       {%- if order.cancelled -%}
-        {%- assign cancelled_at = order.cancelled_at | date: format: 'month_day_year_time' -%}
+        {%- assign cancelled_at = order.cancelled_at | date: format: 'month_day_year_at_time' -%}
         <p class="Alert Alert--large Alert--error">{{ 'customer.order.cancelled_at' | t: date: cancelled_at }}</p>
       {%- endif -%}
 

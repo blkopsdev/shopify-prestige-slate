@@ -1,0 +1,170 @@
+ <section class="Section filer-out-section Section--spacingNormal" data-section-id="{{ section.id }}">
+  <div class="Container shaping-the-future stf">
+    <div class="section-headings text-center">
+    <h3 class="stf-title">{{ section.settings.title }}</h3>
+    <p>{{ section.settings.sub-title }}</p>
+    </div>
+
+    <div class="Grid Grid--m Grid--center">
+
+      <div class="left-content-full">
+          <div class="left-contet-one">
+            <h4>{{ section.settings.left-title-one }}</h4>
+            <p>{{ section.settings.left-1-copy }}</p>
+          </div>
+          <div class="left-contet-two">
+            <h4>{{ section.settings.left-title-two }}</h4>
+            <p>{{ section.settings.left-2-copy }}</p>
+      </div>
+      </div>
+      <div class="center-image">
+        
+          <div class="">
+           <img class="Image--fadeIn Image--lazyLoaded" src="{{ section.settings.image | img_url : "master" }}" alt="">
+        </div>
+      </div>
+<div class="right-content-full">
+        <div class="stf-image">
+          <div class="right-content-one">
+            <h4>{{ section.settings.right-title-one }}</h4>
+            <p>{{ section.settings.right-desctiption-one }}</p>
+          </div>
+          <div class="right-content-two">
+            <h4>{{ section.settings.right-title-two }}</h4>
+            <p>{{ section.settings.right-desctiption-two }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div> 
+    <div class="hero__pattern">
+  
+    <div class="hero__pattern-container">
+      
+      {% comment %} <ul>
+        <li>MINERAL OIL</li>
+        <li>PROPYLENE GLYCOL</li>
+        <li>ANIMAL TESTING</li>
+        <li>PETROLATUM</li>
+        <li>PHTHALATES</li>
+        <li>PARABENS</li>
+        <li>GLUTEN</li>
+      </ul> {% endcomment %}
+
+      {%- if section.settings.icon-image != blank -%}
+      <img src="{{ section.settings.icon-image | img_url : '1920x' }}" alt="">
+      {%- endif -%}
+      
+    </div>
+  </div>
+</section> 
+
+<style></style>
+
+
+{% schema %}
+{
+  "name": "Shaping the future",
+  "class": "shopify-section--bordered",
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Section title"
+    },
+    {
+      "type": "textarea",
+      "id": "sub-title",
+      "label": "Section Sub title",
+      "default": "Section Sub title"
+    },
+    {
+      "type": "text",
+      "id": "left-title-one",
+      "label": "#1 Left Title",
+      "default": "#1 Left Title"
+    },
+    {
+      "type": "textarea",
+      "id": "left-1-copy",
+      "label": "#1 Desctiption",
+      "default": "#1 Desctiption"
+    },
+    {
+      "type": "text",
+      "id": "left-title-two",
+      "label": "#2 Left Title",
+      "default": "#2 Left Title"
+    },
+    {
+      "type": "textarea",
+      "id": "left-2-copy",
+      "label": "#2 Desctiption",
+      "default": "#2 Desctiption"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Meet the founders"
+    },
+    {
+      "type": "text",
+      "id": "right-title-one",
+      "label": "#1 Right Title ",
+      "default": "#1 Right Title"
+    },
+    {
+      "type": "textarea",
+      "id": "right-desctiption-one",
+      "label": "#1 Right Desctiption",
+      "default": "#1 Right Desctiption"
+    },
+    {
+      "type": "text",
+      "id": "right-title-two",
+      "label": "#2 Right Title ",
+      "default": "#2 Right Title"
+    },
+    {
+      "type": "textarea",
+      "id": "right-desctiption-two",
+      "label": "#2 Right Desctiption",
+      "default": "#2 Right Desctiption"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon-image",
+      "label": "Your icons image here"
+    }
+   ],
+  "blocks": [
+    
+  ],
+   "presets": [
+    {
+      "name": {
+        "de": "Foto mit Text",
+        "en": "Filter Out",
+        "es": "Imagen con texto",
+        "fr": "Image avec texte",
+        "it": "Immagine con testo",
+        "ja": "テキスト付き画像",
+        "pt-BR": "Imagem com texto"
+      },
+      "category": {
+        "de": "Foto",
+        "en": "Product",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,170 @@
+<div class="feature-row">
+  <div class="feature-row">
+    <div class="feature-row__item">
+      <div class="image-with-text" style="background-image:url(https://cdn.shopify.com/s/files/1/1521/8626/{{section.settings.image-one}});">
+        <div class="content-box">
+          <h3 style="color: {{section.settings.text_color}}">{{section.settings.title}}</h3>
+          <a class="Button Button--primary" href="{{section.settings.button_link}}">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="feature-row__item">
+      <div class="image-with-text" style="background-image:url(https://cdn.shopify.com/s/files/1/1521/8626/{{section.settings.image-two}});">
+        <div class="content-box">
+          <h3 style="color: {{section.settings.text_color_2}}">{{section.settings.title-two}}</h3>
+          <a class="Button Button--primary" href="{{section.settings.button_link_two}}">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Foto mit Text",
+    "en": "Image with text",
+    "es": "Imagen con texto",
+    "fr": "Image avec du texte",
+    "it": "Immagine con testo",
+    "ja": "テキスト付き画像",
+    "pt-BR": "Imagem com texto"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image-one",
+      "label": {
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image-two",
+      "label": {
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      },
+      "default": {
+        "de": "Foto mit Text",
+        "en": "Image with text",
+        "es": "Imagen con texto",
+        "fr": "Image avec du texte",
+        "it": "Immagine con testo",
+        "ja": "テキスト付き画像",
+        "pt-BR": "Imagem com texto"
+      }
+    },
+	{
+      "type": "color",
+      "id": "text_color",
+      "label": "Left Text Color",
+      "default": "#000000"
+    },
+  {
+      "type": "text",
+      "id": "title-two",
+      "label": {
+        "de": "Titel-two",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      },
+      "default": {
+        "de": "Foto mit Text",
+        "en": "Image with text",
+        "es": "Imagen con texto",
+        "fr": "Image avec du texte",
+        "it": "Immagine con testo",
+        "ja": "テキスト付き画像",
+        "pt-BR": "Imagem com texto"
+      }
+    },
+	{
+      "type": "color",
+      "id": "text_color_2",
+      "label": "Right Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": {
+        "de": "Button-Link",
+        "en": "Button link One",
+        "es": "Enlace de botón",
+        "fr": "Lien du bouton",
+        "it": "Link pulsante",
+        "ja": "ボタンリンク",
+        "pt-BR": "Link do botão"
+      }
+    },
+    {
+      "type": "url",
+      "id": "button_link_two",
+      "label": {
+        "de": "Button-Link",
+        "en": "Button link Two",
+        "es": "Enlace de botón",
+        "fr": "Lien du bouton",
+        "it": "Link pulsante",
+        "ja": "ボタンリンク",
+        "pt-BR": "Link do botão"
+      }
+    }
+ ],
+  "presets": [
+    {
+      "name": {
+        "de": "Foto mit Text",
+        "en": "Replaceable Product",
+        "es": "Imagen con texto",
+        "fr": "Image avec texte",
+        "it": "Immagine con testo",
+        "ja": "テキスト付き画像",
+        "pt-BR": "Imagem com texto"
+      },
+      "category": {
+        "de": "Foto",
+        "en": "Product",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    }
+  ]
+}
+{% endschema %}

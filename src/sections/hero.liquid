@@ -1,0 +1,165 @@
+<section id="section-{{ section.id }}" class="Section hero" data-section-id="{{ section.id }}" data-section-type="hero">
+  {% comment %} <div class="hero__container">
+
+    <img class="hero__content-image hero__content-image--desktop Image--lazyLoad" 
+          src="{{ section.settings.hero_image | img_url : '1600x' }}"
+          alt="{{ section.settings.hero_image-alt }}"/> 
+    
+    <img class="hero__content-image hero__content-image--mobile Image--lazyLoad" 
+          src="{{ section.settings.hero_image-mobile | img_url : '1024x' }}"
+          alt="{{ section.settings.hero_image-alt }}"/> 
+
+    <div class="hero__content">
+      <h1 class="hero__content-title Heading u-h1">{{ section.settings.hero_title }}</h1>
+      <p class="hero__content-copy Rte">{{ section.settings.hero_copy }}</p>
+      <a href="{{ section.settings.hero_link }}" class="hero__content-link Button Button--primary"> {{ section.settings.hero_link-copy }}</a>
+    </div>
+    
+  </div> {% endcomment %}
+
+  <div class="hero__container">
+
+    <div class="hero__image">
+      <img class="hero__content-image hero__content-image--desktop Image--lazyLoad" 
+            src="{{ section.settings.hero_image | img_url : '1600x' }}"
+            alt="{{ section.settings.hero_image-alt }}"/> 
+      
+      <img class="hero__content-image hero__content-image--mobile Image--lazyLoad" 
+            src="{{ section.settings.hero_image-mobile | img_url : '1024x' }}"
+            alt="{{ section.settings.hero_image-alt }}"/> 
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__content-center">
+        <h1 class="hero__content-title Heading u-h1">{{ section.settings.hero_title }}</h1>
+        <p class="hero__content-copy Rte">{{ section.settings.hero_copy }}</p>
+        <a href="{{ section.settings.hero_link }}" class="hero__content-link Button Button--primary"> {{ section.settings.hero_link-copy }}</a>
+      </div>
+    </div>
+    
+  </div>
+ 
+  {% comment %}<div class="hero__pattern">
+  
+    <div class="hero__pattern-container">
+      
+     <ul>
+        <li>MINERAL OIL</li>
+        <li>PROPYLENE GLYCOL</li>
+        <li>ANIMAL TESTING</li>
+        <li>PETROLATUM</li>
+        <li>PHTHALATES</li>
+        <li>PARABENS</li>
+        <li>GLUTEN</li>
+      </ul>
+
+      <img src="{{ section.settings.icon-image | img_url : '1200x' }}" alt="">
+      
+    </div>
+  </div>{% endcomment %}
+  
+</section>
+
+<style>
+  #section-{{ section.id }} .Timeline__ListItem {
+    color: {{ section.settings.text_color }};
+  }
+
+  .hero__content {
+		background: {{ section.settings.background_color_hero }}; 
+	}
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "class": "shopify-section--bordered",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color_hero",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "default": "Title",
+      "label": "Your title here"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_copy",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer",
+      "label": "Your copy here"
+    },
+    {
+      "type": "text",
+      "id": "hero_link",
+      "default": "URL",
+      "label": "Your url here"
+    },
+    {
+      "type": "text",
+      "id": "hero_link-copy",
+      "default": "Shop now",
+      "label": "Your url copy here"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Your desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image-mobile",
+      "label": "Your mobile image"
+    },
+    {
+      "type": "text",
+      "id": "hero_image-alt",
+      "default": "Your image Alt",
+      "label": "Your image Alt"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon-image",
+      "label": "Your icons image here"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "hero",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "340 x 80px jpg recommended"
+        }, 
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>Share what your customers are saying about your products, your company...</p>",
+          "info": "For best results, keep the word count consistent in each quote."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Block",
+      "name": "Hero",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {}
+        } 
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,151 @@
+ <section class="Section Section--spacingNormal" data-section-id="{{ section.id }}">
+  <div class="Container shaping-the-future stf">
+    
+    <h3 class="stf-title">{{ section.settings.title }}</h3>
+
+    <div class="Grid Grid--m Grid--center">
+
+      <div class="stf-description Grid__Cell 2/2--mobile 2/2--tablet 1/2--lap-and-up">
+        <div class="stf-description-copy Grid__Cell 2/2--mobile 2/2--tablet 1/2--lap-and-up">
+        <ul>
+          <li class="stf-proud">
+            <h4 class="stf-description__title u-h2"> {{ section.settings.description-1-title }} </h4>
+            <p class="stf-description__copy u-h4"> {{ section.settings.description-1-copy }} </p>
+          </li>
+          <li class="stf-foundation">
+            <h4 class="stf-description__title u-h2"> {{ section.settings.description-2-title }} </h4>
+            <p class="stf-description__copy u-h4"> {{ section.settings.description-2-copy }} </p>
+          </li>
+          <li class="stf-support">
+            <h4 class="stf-description__title u-h2"> {{ section.settings.description-3-title }} </h4>
+            <!-- <p class="stf-description__copy">XXX</p> -->
+          </li>
+          <li class="stf-stop">
+            <h4 class="stf-description__title u-h2"> {{ section.settings.description-4-title }} </h4>
+            <!-- <p class="stf-description__copy">XXX</p> -->
+          </li>
+        </ul>
+        <a href="{{ section.settings.description-cta-url }}" class="stf-description-link Button Button--primary">More info</a>
+        </div>
+        
+        <div class="stf__meet-founders Grid__Cell 2/2--mobile 2/2--tablet 1/2--lap-and-up">
+          <div class="">
+            <h4>Meet the Founders</h4>
+            <p>Meet the 2 girls disrupting the shower head business, Sara & Kristina and what inspired Vitaclean.</p>
+            <span>@kristinavelkova</span></br>
+            <span>@sarakdouglas</span></br>
+            <a href="" class="Link Link--underline">Learn more</a>
+          </div>
+        </div>
+      </div>
+
+      <div class=" Grid__Cell 2/2--mobile 2/2--tablet 1/2--lap-and-up hidden-tablet">
+        
+        <div class="stf-image">
+          <img class="Image--fadeIn Image--lazyLoaded" src="{{ section.settings.image | img_url : "master" }}" alt="">
+        </div>
+      </div>
+
+    </div>
+
+  </div> 
+</section> 
+
+<style></style>
+
+
+{% schema %}
+{
+  "name": "Shaping the future",
+  "class": "shopify-section--bordered",
+  "max_blocks": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "SHAPING THE FUTURE!"
+    },
+    {
+      "type": "text",
+      "id": "description-1-title",
+      "label": "#1 Desctiption title",
+      "default": "PROUD PARTNERS OF DROP4DROP"
+    },
+    {
+      "type": "textarea",
+      "id": "description-1-copy",
+      "label": "#1 Desctiption copy",
+      "default": "Vitaclean HQ is proud to be a partner with Drop4Drop. We will donate £1 per sale of each shower head sold to provide communities with access to clean water! Help us be part of the solution"
+    },
+    {
+      "type": "text",
+      "id": "description-2-title",
+      "label": "#2 Desctiption title",
+      "default": "FOUNDATION SOLYNA"
+    },
+    {
+      "type": "textarea",
+      "id": "description-2-copy",
+      "label": "#2 Desctiption copy",
+      "default": "Our new shimmer #VitacleanxSolyna coconut coffee scrub is here!"
+    },
+    {
+      "type": "text",
+      "id": "description-3-title",
+      "label": "#3 Desctiption title",
+      "default": "Support Clean Water Projects with Drop For Drop"
+    },
+    {
+      "type": "text",
+      "id": "description-4-title",
+      "label": "#4 Desctiption title",
+      "default": "Stop Human Trafficking with Solyna Foundation"
+    },
+    {
+      "type": "text",
+      "id": "description-cta-url",
+      "label": "Desctiption CTA"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Meet the founders"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shaping-the-future",
+      "name": "shaping-the-future",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "340 x 80px jpg recommended"
+        }, 
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>Share what your customers are saying about your products, your company...</p>",
+          "info": "For best results, keep the word count consistent in each quote."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Block",
+      "name": "Shaping the Future!",
+      "settings": {},
+      "blocks": [
+        {
+          "type": "shaping-the-future",
+          "settings": {}
+        } 
+      ]
+    }
+  ]
+}
+{% endschema %}

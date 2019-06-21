@@ -11,7 +11,7 @@
            data-optimumx="1.4"
            data-expand="-150"
            {% if collection_image %}data-bgset="{{ collection_image | img_url: mobile_size, crop: image_crop }} 750w, {{ collection_image | img_url: '1000x' }} 1000w, {{ collection_image | img_url: '1500x' }} 1500w"{% endif %}>
-        {%- if collection_image == nil -%}
+        {%- if template == 'index' and collection_image == nil -%}
           <div class="PlaceholderBackground PlaceholderSvg--dark">
             {%- capture image_name -%}lifestyle-{% cycle 'anchor': '1', '2' %}{%- endcapture -%}
             {{ image_name | placeholder_svg_tag: 'PlaceholderBackground__Svg' }}
@@ -32,13 +32,17 @@
           <h3 class="SectionHeader__SubHeading Heading u-h6">{{ block.settings.subheading | escape }}</h3>
         {%- endif -%}
 
-        <h2 class="SectionHeader__Heading SectionHeader__Heading--emphasize Heading u-h1">{{ block.settings.title | default: collection.title | escape }}</h2>
+        {%- if collection == empty -%}
+          <h2 class="SectionHeader__Heading SectionHeader__Heading--emphasize Heading u-h1">{{ 'home_page.onboarding.collection_title' | t }}</h2>
+        {%- else -%}
+          <h2 class="SectionHeader__Heading SectionHeader__Heading--emphasize Heading u-h1">{{ block.settings.title | default: collection.title | escape }}</h2>
+        {%- endif -%}
 
         <div class="SectionHeader__ButtonWrapper">
-          {%- if block.settings.button_text != blank -%}
-            <a href="{{ block.settings.button_link | default: collection.url }}" class="CollectionItem__Link Button">{{ block.settings.button_text | escape }}</a>
+          {%- if template == 'index' -%}
+            <a href="{{ collection.url }}" class="CollectionItem__Link Button">{{ block.settings.button_text | escape }}</a>
           {%- else -%}
-            <a href="{{ block.settings.button_link | default: collection.url }}" class="CollectionItem__Link Button">{{ 'collection.general.view_products' | t }}</a>
+            <a href="{{ collection.url }}" class="CollectionItem__Link Button">{{ 'collection.general.view_products' | t }}</a>
           {%- endif -%}
         </div>
       </header>

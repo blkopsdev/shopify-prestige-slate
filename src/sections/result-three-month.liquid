@@ -1,0 +1,153 @@
+<div class="page-width">
+  <div class="section-headings text-center">
+    <h2>{{section.settings.section_heading}}</h2>
+</div>
+</div>
+<div class="page-width feature-row">
+  <div class="feature-row">
+    <div class="feature-row__item seven-colm">
+      <div class="after-three-image">
+       <img class="" 
+          src="{{ section.settings.image-one | img_url : '1024x' }}"/>
+      </div>
+    </div>
+    <div class="feature-row__item five-colm">
+      <div class="after-three-content">
+        <h3>{{section.settings.title}}</h3>
+        <p>{{section.settings.description}}</p>
+        <h4>{{section.settings.cost-name}}</h4>
+        <h5>{{section.settings.cost-work}}</h5>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Foto mit Text",
+    "en": "Image with text",
+    "es": "Imagen con texto",
+    "fr": "Image avec du texte",
+    "it": "Immagine con testo",
+    "ja": "テキスト付き画像",
+    "pt-BR": "Imagem com texto"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": {
+        "de": "Foto",
+        "en": "page title",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "image-one",
+      "label": {
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "de": "Titel",
+        "en": "Heading",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      },
+      "default": {
+        "de": "Foto mit Text",
+        "en": "Result after 3 Month",
+        "es": "Imagen con texto",
+        "fr": "Image avec du texte",
+        "it": "Immagine con testo",
+        "ja": "テキスト付き画像",
+        "pt-BR": "Imagem com texto"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": {
+        "de": "Titel",
+        "en": "content",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      }
+  },
+  {
+      "type": "text",
+      "id": "cost-name",
+      "label": {
+        "de": "Titel",
+        "en": "Customer Name",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      }
+  },
+{
+      "type": "text",
+      "id": "cost-work",
+      "label": {
+        "de": "Titel",
+        "en": "Customer Work",
+        "es": "Título",
+        "fr": "En-tête",
+        "it": "Heading",
+        "ja": "見出し",
+        "pt-BR": "Título"
+      }
+  }
+  
+ ],
+  "presets": [
+    {
+      "name": {
+        "de": "Foto mit Text",
+        "en": "Result After Three Months",
+        "es": "Imagen con texto",
+        "fr": "Image avec texte",
+        "it": "Immagine con testo",
+        "ja": "テキスト付き画像",
+        "pt-BR": "Imagem com texto"
+      },
+      "category": {
+        "de": "Foto",
+        "en": "Product",
+        "es": "Imagen",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "pt-BR": "Imagem"
+      }
+    }
+  ]
+}
+{% endschema %}

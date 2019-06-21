@@ -3,9 +3,9 @@
     "name": "theme_info",
     "theme_name": "Prestige",
     "theme_author": "Maestrooo",
-    "theme_version": "4.1.0",
-    "theme_documentation_url": "http://support.maestrooo.com/",
-    "theme_support_url": "https://support.maestrooo.com/article/203-contact-us"
+    "theme_version": "1.0.2",
+    "theme_documentation_url": "http:\/\/support.maestrooo.com\/",
+    "theme_support_email": "shopify-support@maestrooo.com"
   },
   {
     "name": "Colors",
@@ -247,7 +247,7 @@
         "type": "text",
         "id": "currency_conversion_supported_currencies",
         "label": "Supported currencies",
-        "info": "List of currencies to display. You must separate each currencies by an empty space, and use the ISO 4217 3-letter code. Example: USD CAD EUR. All the possible values are [listed here](http://bit.ly/1C4cZ3w).",
+        "info": "List of currencies to display. You must separate each currencies by an empty space, and use the ISO 4217 3-letter code. Example: USD CAD EUR. All the possible values are [listed here](http:\/\/bit.ly\/1C4cZ3w).",
         "default": "USD CAD EUR GBP"
       },
       {
@@ -279,14 +279,8 @@
       },
       {
         "type": "checkbox",
-        "id": "show_button_transition",
-        "label": "Show button transition",
-        "default": true
-      },
-      {
-        "type": "checkbox",
         "id": "show_image_zooming",
-        "label": "Show image zoom effect",
+        "label": "Show image loading zoom effect",
         "default": true
       },
       {
@@ -328,8 +322,14 @@
     ]
   },
   {
-    "name": "Products grid",
+    "name": "Products",
     "settings": [
+      {
+        "type": "page",
+        "id": "size_chart_page",
+        "label": "Size chart page",
+        "info": "[Learn more](https:\/\/support.maestrooo.com\/article\/172-product-adding-a-size-chart)"
+      },
       {
         "type": "header",
         "content": "Grid"
@@ -478,15 +478,17 @@
         "type": "checkbox",
         "id": "cart_show_free_shipping_threshold",
         "label": "Show free shipping minimum amount",
-        "info": "Make sure that you have properly configured your [shipping rates](/admin/settings/shipping).",
+        "info": "Make sure that you have properly configured your [shipping rates](\/admin\/settings\/shipping).",
         "default": false
       },
       {
-        "type": "text",
+        "type": "range",
+        "min": 10,
+        "max": 100,
+        "step": 1,
         "id": "cart_free_shipping_threshold",
         "label": "Free shipping minimum amount",
-        "info": "Only write a number, no letters",
-        "default": "50"
+        "default": 50
       }
     ]
   },
@@ -506,61 +508,67 @@
       {
         "type": "text",
         "id": "social_facebook",
-        "info": "https://www.facebook.com/shopify",
+        "info": "https:\/\/www.facebook.com\/shopify",
         "label": "Facebook"
       },
       {
         "type": "text",
         "id": "social_twitter",
-        "info": "https://twitter.com/shopify",
+        "info": "https:\/\/twitter.com\/shopify",
         "label": "Twitter"
       },
       {
         "type": "text",
+        "id": "social_google_plus",
+        "info": "https:\/\/plus.google.com\/+shopify",
+        "label": "Google Plus"
+      },
+      {
+        "type": "text",
         "id": "social_pinterest",
-        "info": "https://www.pinterest.com/shopify",
+        "info": "https:\/\/www.pinterest.com\/shopify",
         "label": "Pinterest"
       },
       {
         "type": "text",
         "id": "social_instagram",
-        "info": "https://instagram.com/shopify",
+        "info": "https:\/\/instagram.com\/shopify",
         "label": "Instagram"
       },
       {
         "type": "text",
         "id": "social_vimeo",
-        "info": "https://vimeo.com/shopify",
+        "info": "https:\/\/vimeo.com\/shopify",
         "label": "Vimeo"
       },
       {
         "type": "text",
         "id": "social_tumblr",
-        "info": "https://shopify.tumblr.com",
+        "info": "https:\/\/shopify.tumblr.com",
         "label": "Tumblr"
       },
       {
         "type": "text",
         "id": "social_youtube",
-        "info": "https://www.youtube.com/user/shopify",
+        "info": "https:\/\/www.youtube.com\/user\/shopify",
         "label": "YouTube"
       },
       {
         "type": "text",
         "id": "social_linkedin",
-        "info": "https://linkedin.com/in/shopify",
+        "info": "https:\/\/linkedin.com\/in\/shopify",
         "label": "LinkedIn"
       },
       {
         "type": "text",
         "id": "social_snapchat",
-        "info": "https://snapchat.com/add/shopify",
+        "info": "https:\/\/snapchat.com\/add\/shopify",
         "label": "Snapchat"
       },
       {
         "type": "text",
         "id": "social_fancy",
-        "info": "https://fancy.com/Shopify",
+        "info": "https:\/\/fancy.com\/Shopify",
         "label": "Fancy"
       }
     ]

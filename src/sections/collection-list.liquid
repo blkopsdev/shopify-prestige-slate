@@ -10,22 +10,12 @@
 {%- endcapture -%}
 
 <section id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="collection-list">
-  {%- capture collection_items -%}
+  <div class="Carousel Carousel--insideDots CollectionList {% if section.settings.add_spacing %}CollectionList--spaced{% endif %}" data-flickity-config='{{ flickity_options }}'>
     {%- for block in section.blocks -%}
       {%- assign collection = collections[block.settings.collection] -%}
       {%- include 'collection-item', collection: collection, apply_overlay: block.settings.apply_overlay -%}
     {%- endfor -%}
-  {%- endcapture -%}
-
-  {%- if section.settings.stack_on_mobile -%}
-    <div class="CollectionList CollectionList--grid {% if section.settings.add_spacing %}CollectionList--spaced{% endif %}">
-      {{ collection_items }}
-    </div>
-  {%- else -%}
-    <div class="Carousel Carousel--insideDots CollectionList {% if section.settings.add_spacing %}CollectionList--spaced{% endif %}" data-flickity-config='{{ flickity_options }}'>
-      {{ collection_items }}
-    </div>
-  {%- endif -%}
+  </div>
 </section>
 
 <style>
@@ -88,12 +78,6 @@
       "default": false
     },
     {
-      "type": "checkbox",
-      "id": "stack_on_mobile",
-      "label": "Stack on mobile",
-      "default": true
-    },
-    {
       "type": "color",
       "id": "text_color",
       "label": "Text",
@@ -120,7 +104,7 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image",
-          "info": "1120 x 1200px .jpg recommended"
+          "info": "1120 x 1200px jpg recommended"
         },
         {
           "type": "select",
@@ -208,19 +192,13 @@
           "type": "text",
           "id": "title",
           "label": "Heading",
-          "default": "Collection name"
+          "info": "If none is set, collection title is used."
         },
         {
           "type": "text",
           "id": "button_text",
           "label": "Button text",
           "default": "View products"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link",
-          "info": "If none is set, collection URL is used."
         },
         {
           "type": "checkbox",

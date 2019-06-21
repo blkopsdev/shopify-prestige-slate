@@ -1,14 +1,10 @@
 {%- capture section_settings -%}
 {
   "enableHistoryState": true,
-  "templateSuffix": {{ product.template_suffix | json }},
-  "showInventoryQuantity": {{ section.settings.show_inventory_quantity | json }},
-  "showSku": {{ section.settings.show_sku | json }},
-  "stackProductImages": {{ section.settings.stack_images | json }},
-  "showThumbnails": {{ section.settings.show_thumbnails | json }},
+  "showInventoryQuantity": {% if section.settings.show_inventory_quantity %}true{% else %}false{% endif %},
+  "showThumbnails": {% if section.settings.show_thumbnails %}true{% else %}false{% endif %},
   "inventoryQuantityThreshold": {{ section.settings.inventory_quantity_threshold }},
-  "showPriceInButton": {{ section.settings.show_price_in_button | json }},
-  "enableImageZoom": {{ section.settings.enable_image_zoom | json }},
+  "enableImageZoom": {% if section.settings.enable_image_zoom %}true{% else %}false{% endif %},
   "showPaymentButton": {{ section.settings.show_payment_button | json }},
   "useAjaxCart": {% if settings.cart_type == 'drawer' %}true{% else %}false{% endif %}
 }
@@ -24,7 +20,7 @@
       {%- endif -%}
 
       {%- if section.settings.show_share_buttons -%}
-        <div class="Product__ActionItem hidden-lap-and-up">
+        <div class="Product__ActionItem">
           <button class="RoundButton RoundButton--small RoundButton--flat" data-action="toggle-social-share" data-animate-bottom aria-expanded="false">
             <span class="RoundButton__PrimaryState">{% include 'icon' with 'share' %}</span>
             <span class="RoundButton__SecondaryState">{% include 'icon' with 'close' %}</span>
@@ -109,7 +105,7 @@
     {%- endcapture -%}
 
     {%- if product.images.size > 0 -%}
-      <div class="Product__Gallery {% if section.settings.stack_images %}Product__Gallery--stack{% endif %} {% if section.settings.show_thumbnails and image_count > 1 %}Product__Gallery--withThumbnails{% else %}Product__Gallery--withDots{% endif %}">
+      <div class="Product__Gallery {% if section.settings.show_thumbnails and image_count > 1 %}Product__Gallery--withThumbnails{% else %}Product__Gallery--withDots{% endif %}">
         <span id="ProductGallery" class="Anchor"></span>
 
         {%- if action_list_items != blank -%}
@@ -118,62 +114,44 @@
           </div>
         {%- endif -%}
 
-        {%- capture slideshow_nav -%}
-          {%- if image_count > 1 -%}
-            {%- if section.settings.show_thumbnails -%}
-              <div class="Product__SlideshowNav Product__SlideshowNav--thumbnails">
-                <div class="Product__SlideshowNavScroller">
-                  {%- for image in product.images -%}
-                    {%- if image.alt == 'featured' or image.alt == 'featured mobile' -%}
-                      {%- continue -%}
+        {%- if image_count > 1 -%}
+          {%- if section.settings.show_thumbnails -%}
+            <div class="Product__SlideshowNav Product__SlideshowNav--thumbnails">
+              <div class="Product__SlideshowNavScroller">
+                {%- for image in product.images -%}
+                  {%- if image.alt == 'featured' or image.alt == 'featured mobile' -%}
+                    {%- continue -%}
+                  {%- endif -%}
+
+                  {%- assign is_video = false -%}
+
+                  {%- if image.alt contains 'youtube.com/embed' or image.alt contains 'player.vimeo.com' -%}
+                    {%- assign is_video = true -%}
+                  {%- endif -%}
+
+                  <a href="#Image{{ image.id }}" class="Product__SlideshowNavImage {% if is_video %}Product__SlideshowNavImage--video{% endif %} AspectRatio {% if forloop.first %}is-selected{% endif %}" style="--aspect-ratio: {{ image.aspect_ratio }}">
+                    <img src="{{ image | img_url: '160x' }}">
+
+                    {%- if is_video -%}
+                      <button type="button" class="Product__SlideshowNavPlay" data-action="play-video" aria-label="{{ 'home_page.featured_video.play' | t }}">{% include 'icon' with 'play' %}</button>
                     {%- endif -%}
-
-                    {%- assign is_video = false -%}
-
-                    {%- if image.alt contains 'youtube.com/embed' or image.alt contains 'player.vimeo.com' -%}
-                      {%- assign is_video = true -%}
-                    {%- endif -%}
-
-                    {%- if section.settings.stack_images -%}
-                      <a href="#Image{{ image.id }}" data-image-id="{{ image.id }}" class="Product__SlideshowNavImage {% if is_video %}Product__SlideshowNavImage--video{% endif %} AspectRatio {% if forloop.first %}is-selected{% endif %}" style="--aspect-ratio: {{ image.aspect_ratio }}">
-                        <img src="{{ image | img_url: '160x' }}">
-
-                        {%- if is_video -%}
-                          <button type="button" class="Product__SlideshowNavPlay" data-action="play-video" aria-label="{{ 'home_page.featured_video.play' | t }}">{% include 'icon' with 'play' %}</button>
-                        {%- endif -%}
-                      </a>
-                    {%- else -%}
-                      <span data-image-id="{{ image.id }}" class="Product__SlideshowNavImage {% if is_video %}Product__SlideshowNavImage--video{% endif %} AspectRatio {% if forloop.first %}is-selected{% endif %}" style="--aspect-ratio: {{ image.aspect_ratio }}">
-                        <img src="{{ image | img_url: '160x' }}">
-
-                        {%- if is_video -%}
-                          <button type="button" class="Product__SlideshowNavPlay" data-action="play-video" aria-label="{{ 'home_page.featured_video.play' | t }}">{% include 'icon' with 'play' %}</button>
-                        {%- endif -%}
-                      </span>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </div>
+                  </a>
+                {%- endfor -%}
               </div>
-            {%- endif -%}
-
-            {%- if section.settings.stack_images -%}
-              <div class="Product__SlideshowNav Product__SlideshowNav--dots">
-                <div class="Product__SlideshowNavScroller">
-                  {%- for image in product.images -%}
-                    {%- if image.alt == 'featured' or image.alt == 'featured mobile' -%}
-                      {%- continue -%}
-                    {%- endif -%}
-
-                    <a href="#Image{{ image.id }}" class="Product__SlideshowNavDot {% if forloop.first %}is-selected{% endif %}"></a>
-                  {%- endfor -%}
-                </div>
-              </div>
-            {%- endif -%}
+            </div>
           {%- endif -%}
-        {%- endcapture -%}
 
-        {%- if section.settings.stack_images -%}
-          {{- slideshow_nav -}}
+          <div class="Product__SlideshowNav Product__SlideshowNav--dots">
+            <div class="Product__SlideshowNavScroller">
+              {%- for image in product.images -%}
+                {%- if image.alt == 'featured' or image.alt == 'featured mobile' -%}
+                  {%- continue -%}
+                {%- endif -%}
+
+                <a href="#Image{{ image.id }}" class="Product__SlideshowNavDot {% if forloop.first %}is-selected{% endif %}"></a>
+              {%- endfor -%}
+            </div>
+          </div>
         {%- endif -%}
 
         {%- capture flickity_options -%}
@@ -181,10 +159,10 @@
           "prevNextButtons": false,
           "pageDots": {% if image_count > 1 %}true{% else %}false{% endif %},
           "adaptiveHeight": true,
+          "wrapAround": false,
           "watchCSS": true,
           "dragThreshold": 8,
-          "initialIndex": {{ initial_image_index }},
-          "arrowShape": {"x0": 20, "x1": 60, "y1": 40, "x2": 60, "y2": 35, "x3": 25}
+          "initialIndex": {{ initial_image_index }}
         }
         {%- endcapture -%}
 
@@ -192,9 +170,7 @@
           {{ slideshow_images }}
         </div>
 
-        {%- unless section.settings.stack_images -%}
-          {{- slideshow_nav -}}
-        {%- endunless -%}
+        
       </div>
     {%- endif -%}
 
@@ -226,7 +202,7 @@
                 <h3 class="SectionHeader__Heading Heading u-h4">{{ 'product.buy_it_with.title' | t }}</h3>
               </header>
 
-              {% include 'product-item', product: associated_product, use_horizontal: true, show_labels: false, show_product_info: true, show_vendor: false, show_price_on_hover: false %}
+              {% include 'product-item', product: associated_product, use_horizontal: true, show_labels: false, show_product_info: true, show_price_on_hover: false %}
             </div>
 
             {%- break -%}
@@ -239,35 +215,7 @@
       <div class="Product__Info {% if image_count == 0 %}Product__Info--noGallery{% endif %}">
         <div class="Container">
           {%- include 'product-meta', show_description: true -%}
-
-          {%- if product.template_suffix != 'coming-soon' -%}
-            {%- include 'product-form' -%}
-          {%- endif -%}
-
-          {%- if section.settings.description_below_add_to_cart -%}
-            <div class="ProductMeta__Description">
-              <div class="Rte">
-                {{ product.description }}
-              </div>
-
-              {%- if section.settings.show_share_buttons -%}
-                <div class="ProductMeta__ShareButtons hidden-pocket">
-                  <span class="ProductMeta__ShareTitle Heading Text--subdued u-h7">{{ 'product.form.share' | t }}</span>
-
-                  {%- assign share_url = shop.url | append: product.url -%}
-                  {%- assign twitter_text = product.title -%}
-                  {%- assign pinterest_description = product.description | strip_html | truncatewords: 15 | url_param_escape -%}
-                  {%- assign pinterest_image = product.featured_image | img_url: 'large' | prepend: 'https:' -%}
-
-                  <div class="ProductMeta__ShareList Text--subdued">
-                    <a class="ProductMeta__ShareItem" href="https://www.facebook.com/sharer.php?u={{ share_url }}" target="_blank" rel="noopener" aria-label="Facebook">{%- include 'icon' with 'facebook' -%}</a>
-                    <a class="ProductMeta__ShareItem" href="https://twitter.com/share?{% if twitter_text != blank %}text={{twitter_text}}&{% endif %}url={{ share_url }}" target="_blank" rel="noopener" aria-label="Twitter">{%- include 'icon' with 'twitter' -%}</a>
-                    <a class="ProductMeta__ShareItem" href="https://pinterest.com/pin/create/button/?url={{ share_url }}{% if pinterest_image != blank %}&media={{ pinterest_image }}{% endif %}&description={{ pinterest_description }}" target="_blank" rel="noopener" aria-label="Pinterest">{%- include 'icon' with 'pinterest' -%}</a>
-                  </div>
-                </div>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
+          {%- include 'product-form' -%}
 
           {%- if product_aside != blank and image_count > 0 -%}
             <div class="Product__QuickNav hidden-pocket">
@@ -277,8 +225,8 @@
               </div>
             </div>
           {%- endif -%}
-        </div>
-      </div>
+
+    
 
       {%- if action_list_items != blank -%}
         <div class="Product__ActionList hidden-pocket">
@@ -328,7 +276,7 @@ We allow merchants to use one image as a "featured image" by adding the alt tag 
   {%- assign desk_featured_image = desk_featured_image | default: mobile_featured_image -%}
 
   <div class="Product__FeatureImageWrapper" style="background: url({{ desk_featured_image | img_url: '1x1', format: 'jpg' }})">
-    <div class="Product__FeatureImage Product__FeatureImage--{{ section.settings.featured_image_size }} Image--lazyLoad Image--zoomOut hide-no-js" data-expand="-25" data-bgset="{{ mobile_featured_image | img_url: 'x850' }} [(max-width: 640px)] | {{ desk_featured_image | img_url: '1500x' }}"></div>
+    <div class="Product__FeatureImage Product__FeatureImage--{{ section.settings.featured_image_size }} Image--lazyLoad Image--zoomOut hide-no-js" data-expand="-25" data-bgset="{{ mobile_featured_image | img_url: '750x850' }} [(max-width: 640px)] | {{ desk_featured_image | img_url: '1500x' }}"></div>
 
     <noscript>
       <div class="Product__FeatureImage Product__FeatureImage--{{ section.settings.featured_image_size }}" style="background-image: url({{ desk_featured_image | img_url: '1500x' }})"></div>
@@ -414,6 +362,7 @@ This is the root container for the zoom functionality. Must not be removed, as o
         <button class="pswp__button pswp__button--next RoundButton" data-animate-right title="{{ 'product.slideshow.next' | t }}">{% include 'icon' with 'arrow-right' %}</button>
       </div>
     </div>
+
   </div>
 {%- endif -%}
 
@@ -436,44 +385,16 @@ This is the root container for the zoom functionality. Must not be removed, as o
     },
     {
       "type": "checkbox",
-      "id": "show_sku",
-      "label": "Show SKU",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "description_below_add_to_cart",
-      "label": "Description below add to cart",
-      "default": false
-    },
-    {
-      "type": "select",
-      "id": "selector_mode",
-      "label": "Selector type",
-      "options": [
-        {
-          "value": "block",
-          "label": "Block"
-        },
-        {
-          "value": "dropdown",
-          "label": "Dropdown"
-        }
-      ],
-      "default": "dropdown"
-    },
-    {
-      "type": "checkbox",
       "id": "show_color_swatch",
       "label": "Show color swatch",
-      "default": false,
+      "default": true,
       "info": "Some colors appear white? [Learn more](http://support.maestrooo.com/article/80-product-uploading-custom-color-for-color-swatch)."
     },
     {
       "type": "checkbox",
       "id": "show_color_carousel",
       "label": "Show color carousel",
-      "info": "A pop-up selector with variant images for choosing colors. Only enables when color swatch is disabled.",
+      "info": "A selector will appear with variant image previews when choosing colors.",
       "default": false
     },
     {
@@ -501,16 +422,10 @@ This is the root container for the zoom functionality. Must not be removed, as o
     },
     {
       "type": "checkbox",
-      "id": "show_price_in_button",
-      "label": "Show price in add to cart button",
-      "default": false
-    },
-    {
-      "type": "checkbox",
       "id": "show_payment_button",
       "label": "Show dynamic checkout button",
-      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
-      "default": true
+      "info": "Lets customers check out directly using a familiar payment method. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "default": false
     },
     {
       "type": "header",
@@ -542,20 +457,15 @@ This is the root container for the zoom functionality. Must not be removed, as o
     },
     {
       "type": "checkbox",
-      "id": "stack_images",
-      "label": "Stack images on desktop",
+      "id": "enable_image_zoom",
+      "label": "Enable zoom",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_thumbnails",
-      "label": "Show thumbnails on desktop",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_image_zoom",
-      "label": "Enable zoom",
+      "label": "Show thumbnails",
+      "info": "Only applicable on large screens",
       "default": true
     },
     {

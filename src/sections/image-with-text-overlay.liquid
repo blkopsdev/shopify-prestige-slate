@@ -24,13 +24,14 @@
       {%- if section.settings.subheading != blank or section.settings.title != blank or section.settings.content != blank -%}
         <div class="ImageHero__ContentOverlay">
           {%- if section.settings.subheading != blank or section.settings.title != blank -%}
-            <header class="SectionHeader">
-              {%- if section.settings.subheading != blank -%}
-                <h3 class="SectionHeader__SubHeading Heading u-h6">{{ section.settings.subheading | escape }}</h3>
-              {%- endif -%}
-
+            <header class="SectionHeader"> 
+            
               {%- if section.settings.title != blank -%}
                 <h2 class="SectionHeader__Heading Heading u-h1">{{ section.settings.title | escape }}</h2>
+              {%- endif -%}
+
+              {%- if section.settings.subheading != blank -%}
+                <h3 class="SectionHeader__SubHeading Heading u-h6">{{ section.settings.subheading | escape }}</h3>
               {%- endif -%}
 
               {%- if section.settings.content != blank -%}
@@ -86,7 +87,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image",
-      "info": "1500 x 800px .jpg recommended"
+      "info": "1500 x 800px jpg recommended"
     },
     {
       "type": "color",

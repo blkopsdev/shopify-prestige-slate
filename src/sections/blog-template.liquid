@@ -115,13 +115,11 @@
     background-color: #ffffff;
   }
 
-  {%- if settings.show_button_transition -%}
-    @media (-moz-touch-enabled: 0), (hover: hover) {
-      #section-{{ section.id }} .ImageHero .Button:hover {
-        color: #ffffff;
-      }
+  @media (-moz-touch-enabled: 0), (hover: hover) {
+    #section-{{ section.id }} .ImageHero .Button:hover {
+      color: #ffffff;
     }
-  {%- endif -%}
+  }
 </style>
 
 {% schema %}

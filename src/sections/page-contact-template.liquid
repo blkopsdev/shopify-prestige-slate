@@ -1,9 +1,25 @@
+<img style="width: 100%;" src="{{ section.settings.contact-banner | img_url : "master" }}" alt="">
+
 <div class="Container">
+
   <header class="PageHeader">
     <div class="SectionHeader SectionHeader--center">
       <h1 class="SectionHeader__Heading Heading u-h1">{{ page.title }}</h1>
     </div>
   </header>
+
+  <div class="contact-details">
+
+    <div class="contact-phone">
+        <svg enable-background="new 0 0 50 50" height="50px" id="Layer_1" version="1.1" viewBox="0 0 50 50" width="50px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect fill="none" height="50" width="50"/><path d="M30.217,35.252c0,0,4.049-2.318,5.109-2.875  c1.057-0.559,2.152-0.7,2.817-0.294c1.007,0.616,9.463,6.241,10.175,6.739c0.712,0.499,1.055,1.924,0.076,3.32  c-0.975,1.396-5.473,6.916-7.379,6.857c-1.909-0.062-9.846-0.236-24.813-15.207C1.238,18.826,1.061,10.887,1,8.978  C0.939,7.07,6.459,2.571,7.855,1.595c1.398-0.975,2.825-0.608,3.321,0.078c0.564,0.781,6.124,9.21,6.736,10.176  c0.419,0.66,0.265,1.761-0.294,2.819c-0.556,1.06-2.874,5.109-2.874,5.109s1.634,2.787,7.16,8.312  C27.431,33.615,30.217,35.252,30.217,35.252z" fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"/></svg>
+      <span>+44 7477 247044</span>
+    </div>
+
+    <div class="contact-email">
+      <svg enable-background="new 0 0 32 32" height="32px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28,5H4C1.791,5,0,6.792,0,9v13c0,2.209,1.791,4,4,4h24c2.209,0,4-1.791,4-4V9  C32,6.792,30.209,5,28,5z M2,10.25l6.999,5.25L2,20.75V10.25z M30,22c0,1.104-0.898,2-2,2H4c-1.103,0-2-0.896-2-2l7.832-5.875  l4.368,3.277c0.533,0.398,1.166,0.6,1.8,0.6c0.633,0,1.266-0.201,1.799-0.6l4.369-3.277L30,22L30,22z M30,20.75l-7-5.25l7-5.25  V20.75z M17.199,18.602c-0.349,0.262-0.763,0.4-1.199,0.4c-0.436,0-0.851-0.139-1.2-0.4L10.665,15.5l-0.833-0.625L2,9.001V9  c0-1.103,0.897-2,2-2h24c1.102,0,2,0.897,2,2L17.199,18.602z" fill="#333333" id="mail"/></svg>
+      <span>customerservice@vitacleanhq.com</span>
+    </div>
+  </div>
 
   <div class="PageContent PageContent--narrow">
     <div class="Rte">
@@ -41,19 +57,13 @@
         </div>
 
         {%- for block in section.blocks -%}
-          {%- assign field_title = block.settings.title -%}
-
-          {%- if field_title == blank -%}
-            {%- capture field_title -%}Custom field {% increment custom_field %}{%- endcapture -%}
-          {%- endif -%}
-
           {%- if block.type == 'text' -%}
             <div class="Form__Item">
               {%- if block.settings.use_long_text -%}
-                <textarea name="contact[{{ field_title | escape }}]" cols="30" rows="10" class="Form__Textarea" aria-label="{{ block.settings.title | escape }}" placeholder="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}></textarea>
+                <textarea name="contact[{{ block.settings.title | escape }}]" cols="30" rows="10" class="Form__Textarea" aria-label="{{ block.settings.title | escape }}" placeholder="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}></textarea>
                 <label class="Form__FloatingLabel">{{ block.settings.title | escape }}</label>
               {%- else -%}
-                <input type="text" class="Form__Input" name="contact[{{ field_title | escape }}]" aria-label="{{ block.settings.title | escape }}" placeholder="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}>
+                <input type="text" class="Form__Input" name="contact[{{ block.settings.title | escape }}]" aria-label="{{ block.settings.title | escape }}" placeholder="{{ block.settings.title | escape }}" {% if block.settings.is_required %}required{% endif %}>
                 <label class="Form__FloatingLabel">{{ block.settings.title | escape }}</label>
               {%- endif -%}
             </div>
@@ -68,7 +78,7 @@
               <div class="Form__Select Select Select--primary">
                 {%- include 'icon' with 'select-arrow' -%}
 
-                <select name="contact[{{ field_title | escape }}]" title="{{ block.settings.title | escape }}" required>
+                <select name="contact[{{ block.settings.title | escape }}]" title="{{ block.settings.title | escape }}" required>
                   <option value="" disabled selected>{{ block.settings.title | escape }}</option>
 
                   {%- for value in values -%}
@@ -96,12 +106,18 @@
 {% schema %}
 {
   "name": "Contact page",
-  "settings": [],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "contact-banner",
+      "label": "banner image"
+    }
+  ],
   "blocks": [
     {
       "type": "text",
       "name": "Text field",
-      "settings": [
+      "settings": [ 
         {
           "type": "text",
           "id": "title",
