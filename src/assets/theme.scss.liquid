@@ -485,6 +485,14 @@ $widescreen:       "screen and (min-width: 1500px)";
   padding-left: 50px;
 }
 
+.Grid--xl {
+  margin-left: -50px;
+}
+
+.Grid--l > .Grid__Cell {
+  padding-left: 50px;
+}
+
 @include av-mq('desk') {
   .Grid--m {
     margin-left: -60px;
@@ -1495,7 +1503,7 @@ body:not(.is-tabbing) textarea:focus {
 
 [data-scrollable] {
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  /* -webkit-overflow-scrolling: touch; */
 }
 
 .Container {
@@ -1613,6 +1621,7 @@ body {
 }
 
 .Heading {
+  // font-family: $heading-font-family;
   font-weight: $heading-font-weight;
   font-style: $heading-font-style;
   color: $heading-color;
