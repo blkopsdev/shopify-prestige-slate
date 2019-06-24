@@ -15,7 +15,7 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
 
-    <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="canonical" href="{{ canonical_url }}">
 	<link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" />
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.com' }}" hreflang="en-us" />
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" hreflang="en-gb" />
@@ -29,21 +29,21 @@
 	setTimeout(function(){s();}, 3000);})(document,'script','style','head');
 	</script>
   
-    {%- if settings.favicon -%}
-      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
-    {%- endif -%}
+  {%- if settings.favicon -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
 
-    {% include 'social-meta-tags' %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  {% include 'social-meta-tags' %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 
-    {{ content_for_header }}
+  {{ content_for_header }}
+
 	{%- include 'bold-common' -%}
 
     <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
 
     <script>
-      
       // This allows to expose several variables to the global scope, to be used in scripts
       window.theme = {
         template: {{ template.name | json }},
@@ -53,6 +53,7 @@
         currencyConversionEnabled: {{ settings.currency_conversion_enabled | json }},
         currencyConversionMoneyFormat: {{ settings.currency_conversion_money_format | json }},
         currencyConversionRoundAmounts: {{ settings.currency_conversion_round_amounts | json }},
+        productImageSize: {{ settings.product_image_size | json }},
         searchMode: {{ settings.search_mode | json }},
         showPageTransition: {{ settings.show_page_transition | json }},
         showElementStaggering: {{ settings.show_element_staggering | json }},
