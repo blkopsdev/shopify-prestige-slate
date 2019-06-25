@@ -33,7 +33,7 @@
         <div class="ProductList ProductList--carousel Carousel" data-flickity-config='{{ flickity_options }}'>
           {%- for product in search.results -%}
             <div class="Carousel__Cell">
-              {% include 'product-item', show_product_info: section.settings.show_product_info, show_color_swatch: section.settings.show_color_swatch, show_labels: true %}
+              {% include 'product-item', show_product_info: section.settings.show_product_info, show_vendor: section.settings.show_vendor, show_color_swatch: section.settings.show_color_swatch, show_labels: true %}
             </div>
           {%- endfor -%}
         </div>
@@ -64,6 +64,12 @@
       "id": "show_product_info",
       "label": "Show product info",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
     },
     {
       "type": "checkbox",

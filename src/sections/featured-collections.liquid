@@ -69,7 +69,7 @@
             <div class="ProductList ProductList--grid ProductList--removeMargin Grid" data-mobile-count="{{ section.settings.grid_mobile_items_per_row }}" data-desktop-count="{{ section.settings.grid_desktop_items_per_row }}">
               {%- for product in collection.products limit: block.settings.grid_items_count -%}
                 <div class="Grid__Cell 1/{{ section.settings.grid_mobile_items_per_row }}--phone 1/2--tablet 1/{{ section.settings.grid_desktop_items_per_row }}--lap-and-up">
-                  {%- include 'product-item', show_product_info: section.settings.show_product_info, show_color_swatch: section.settings.show_color_swatch, show_labels: true -%}
+                  {%- include 'product-item', show_product_info: section.settings.show_product_info, show_vendor: section.settings.show_vendor, show_color_swatch: section.settings.show_color_swatch, show_labels: true -%}
                 </div>
               {%- endfor -%}
             </div>
@@ -77,7 +77,7 @@
             <div class="ProductList ProductList--carousel Carousel" data-flickity-config='{{ flickity_options }}'>
               {%- for product in collection.products limit: block.settings.grid_items_count -%}
                 <div class="Carousel__Cell">
-                  {%- include 'product-item', show_product_info: section.settings.show_product_info, show_color_swatch: section.settings.show_color_swatch, show_labels: true -%}
+                  {%- include 'product-item', show_product_info: section.settings.show_product_info, show_vendor: section.settings.show_vendor, show_color_swatch: section.settings.show_color_swatch, show_labels: true -%}
                 </div>
               {%- endfor -%}
             </div>
@@ -98,6 +98,10 @@
 
                     {%- if section.settings.show_product_info -%}
                       <div class="ProductItem__Info ProductItem__Info--{{ settings.product_info_alignment }}">
+                        {%- if section.settings.show_vendor -%}
+                          <p class="ProductItem__Vendor Heading">{{ 'home_page.onboarding.vendor_title' | t }}</p>
+                        {%- endif -%}
+
                         <h2 class="ProductItem__Title Heading">{{ 'home_page.onboarding.product_title' | t }}</h2>
 
                         <div class="ProductItem__PriceList Heading">
@@ -172,6 +176,12 @@
       "id": "show_product_info",
       "label": "Show product info",
       "default": true
+    },		
+    {		
+      "type": "checkbox",		
+      "id": "show_vendor",		
+      "label": "Show vendor",		
+      "default": false		
     },
     {
       "type": "checkbox",

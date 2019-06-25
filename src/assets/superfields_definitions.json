@@ -3,7 +3,7 @@
     "resource_type": "products",
     "groups": [
       {
-        "description": "Add up to two unique product tabs, that are unique to a given product. Make sure to include both the title and the content for each tab.",
+        "description": "Add up to three unique product tabs, that are unique to a given product. Make sure to include both the title and the content for each tab.",
         "name": "Custom product tabs",
         "namespace": "sf_product_tabs",
         "sub_groups": [
@@ -35,6 +35,22 @@
               {
                 "type": "rte",
                 "key": "tab_2_content",
+                "name": "Content"
+              }
+            ]
+          },
+          {
+            "name": "Tab 3",
+            "fields": [
+              {
+                "type": "text",
+                "key": "tab_3_title",
+                "name": "Title",
+                "hint": "Keep the title short"
+              },
+              {
+                "type": "rte",
+                "key": "tab_3_content",
                 "name": "Content"
               }
             ]
