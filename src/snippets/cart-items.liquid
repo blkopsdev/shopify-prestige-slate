@@ -41,23 +41,22 @@
               {%- for property in line_item.properties -%}
                 {%- assign first_character_in_key = property.first | truncate: 1, '' -%}
 
-                {%- if property.last == blank or first_character_in_key == '_' -%}
-                  {%- continue -%}
-                {%- endif -%}
-
-                <li class="CartItem__Property">{{ property.first }}: {{ property.last }}</li>
+                {% unless property.last == blank or property.first == 'subscription_id' or property.first == 'shipping_interval_frequency' or property.first == 'shipping_interval_unit_type'%}
+                  <li class="CartItem__Property">{{ property.first }}: {{ property.last }}</li>
+                {% endunless %}
               {%- endfor -%}
             </ul>
           {%- endif -%}
 
           <div class="CartItem__PriceList">
-            {%- if line_item.original_price != line_item.final_price -%}
+            {%- if line_item.original_price > line_item.final_price -%}
               <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
               <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.original_price | money_without_trailing_zeros }}</span>
             {%- else -%}
               <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
             {%- endif -%}
 
+            {%- comment -%}
             {%- if line_item.line_level_discount_allocations != blank -%}
               <ul class="CartItem__DiscountList">
                 {%- for discount_allocation in line_item.line_level_discount_allocations -%}
@@ -67,6 +66,7 @@
                 {%- endfor -%}
               </ul>
             {%- endif -%}
+            {%- endcomment -%}
           </div>
         </div>
 
@@ -80,7 +80,7 @@
                   {%- include 'icon' with 'minus' -%}
                 </a>
 
-                <input type="text" name="updates[{{ line_item.key }}]" id="updates_{{ line_item.key }}" class="QuantitySelector__CurrentQuantity" pattern="[0-9]*" data-line-id="{{ line_item.key }}" value="{{ line_item.quantity }}">
+                <input type="text" name="updates[]" id="updates_{{ line_item.key }}" class="QuantitySelector__CurrentQuantity" pattern="[0-9]*" data-line-id="{{ line_item.key }}" value="{{ line_item.quantity }}">
 
                 {%- assign quantity_plus_one = line_item.quantity | plus: 1 -%}
 
@@ -100,14 +100,7 @@
       {%- unless for_drawer -%}
         {{ item_actions }}
 
-        <div class="CartItem__LinePriceList Heading Text--subdued" style="text-align: right">
-          {%- if line_item.original_line_price != line_item.final_line_price -%}
-            <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_line_price | money_without_trailing_zeros }}</span>
-            <span class="CartItem__Price Price Price--compareAt" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.original_line_price | money_without_trailing_zeros }}</span>
-          {%- else -%}
-            <span class="CartItem__Price Price" data-money-convertible>{{ line_item.final_line_price | money_without_trailing_zeros }}</span>
-          {%- endif -%}
-        </div>
+        <span class="CartItem__LinePrice CartItem__LinePriceList Price Heading Text--subdued u-h7" data-money-convertible style="text-align: right"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
       {%- endunless -%}
     </div>
 
