@@ -49,11 +49,16 @@
           {%- endif -%}
 
           <div class="CartItem__PriceList">
+<<<<<<< HEAD
+            {%- if line_item.original_price != line_item.final_price -%}
+              <span class="CartItem__Price Price Price--highlight" data-money-convertible>{{ line_item.final_price | money_without_trailing_zeros }}</span>
+=======
             {%- if line_item.original_price > line_item.final_price -%}
               <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
+>>>>>>> 54063e8078bd9bc69ce4a9c025b00373a11c5f3c
               <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.original_price | money_without_trailing_zeros }}</span>
             {%- else -%}
-              <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
+              <span class="CartItem__Price Price" data-money-convertible>{{ line_item.final_price | money_without_trailing_zeros }}</span>
             {%- endif -%}
 
             {%- comment -%}
@@ -100,7 +105,14 @@
       {%- unless for_drawer -%}
         {{ item_actions }}
 
-        <span class="CartItem__LinePrice CartItem__LinePriceList Price Heading Text--subdued u-h7" data-money-convertible style="text-align: right"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+        <div class="CartItem__LinePriceList Heading Text--subdued" style="text-align: right">
+          {%- if line_item.original_line_price != line_item.final_line_price -%}
+            <span class="CartItem__Price Price Price--highlight" data-money-convertible>{{ line_item.final_line_price | money_without_trailing_zeros }}</span>
+            <span class="CartItem__Price Price Price--compareAt" data-money-convertible>{{ line_item.original_line_price | money_without_trailing_zeros }}</span>
+          {%- else -%}
+            <span class="CartItem__Price Price" data-money-convertible>{{ line_item.final_line_price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+        </div>
       {%- endunless -%}
     </div>
 

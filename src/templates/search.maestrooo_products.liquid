@@ -38,7 +38,7 @@ are still using our apps. Otherwise, the apps may not work as expected.
             "title": {{ variant.title | json }},
             "url": {{ shop.secure_url | append: variant.url | json }},
             "image": {{ variant.image.src | json }},
-            "price": <span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price" data-override-value-set="1" data-override-value="{{ variant.price }}" style="display:none !important;"></span>{{ variant.price }},
+            "price": {{ variant.price }},
             "available": {% if variant.available %}true{% else %}false{% endif %}
           }{%- unless forloop.last %},{% endunless -%}
         {%- endfor -%}
@@ -53,8 +53,8 @@ are still using our apps. Otherwise, the apps may not work as expected.
       "featured_image": {{ product.featured_image.src | json }},
       "available": {% if product.available %}true{% else %}false{% endif %},
       "variants": [{{ product_variants }}],
-      "price_min": <span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_2" data-override-value-set="1" data-override-value="{{ product.price_min }}" style="display:none !important;"></span>{{ product.price_min }},
-      "price_max": <span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_3" data-override-value-set="1" data-override-value="{{ product.price_max }}" style="display:none !important;"></span>{{ product.price_max }},
+      "price_min": {{ product.price_min }},
+      "price_max": {{ product.price_max }},
       "type": {{ product.type | json }},
       "vendor": {{ product.vendor | json }},
       "tags": {{ product.tags | json }},
@@ -87,7 +87,7 @@ are still using our apps. Otherwise, the apps may not work as expected.
                 "title": {{ variant.title | json }},
                 "url": {{ shop.secure_url | append: variant.url | json }},
                 "image": {{ variant.image.src | json }},
-                "price": <span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_4" data-override-value-set="1" data-override-value="{{ variant.price }}" style="display:none !important;"></span>{{ variant.price }},
+                "price": {{ variant.price }},
                 "available": {% if variant.available %}true{% else %}false{% endif %}
               }{%- unless forloop.last %},{% endunless -%}
             {%- endfor -%}
@@ -103,8 +103,8 @@ are still using our apps. Otherwise, the apps may not work as expected.
             "featured_image": {{ product.featured_image.src | json }},
             "available": {% if product.available %}true{% else %}false{% endif %},
             "variants": [{{ product_variants }}],
-            "price_min": <span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_5" data-override-value-set="1" data-override-value="{{ product.price_min }}" style="display:none !important;"></span>{{ product.price_min }},
-            "price_max": <span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_6" data-override-value-set="1" data-override-value="{{ product.price_max }}" style="display:none !important;"></span>{{ product.price_max }},
+            "price_min": {{ product.price_min }},
+            "price_max": {{ product.price_max }},
             "type": {{ product.type | json }},
             "vendor": {{ product.vendor | json }},
             "tags": {{ product.tags | json }},

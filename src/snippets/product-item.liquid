@@ -148,14 +148,14 @@
         {%- if product.template_suffix != 'coming-soon' -%}
           <div class="ProductItem__PriceList {% if show_price_on_hover %}ProductItem__PriceList--showOnHover{% endif %} Heading">
             {%- if product.compare_at_price > product.price -%}
-              <span class="ProductItem__Price Price Price--highlight Text--subdued" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price" data-override-value-set="1" data-override-value="{{ product.price }}" style="display:none !important;"></span>{{ product.price | money_without_trailing_zeros }}</span>
-              <span class="ProductItem__Price Price Price--compareAt Text--subdued" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_product_compare_price" data-override-value-set="1" data-override-value="{{ product.compare_at_price }}" style="display:none !important;"></span>{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+              <span class="ProductItem__Price Price Price--highlight Text--subdued" data-money-convertible>{{ product.price | money_without_trailing_zeros }}</span>
+              <span class="ProductItem__Price Price Price--compareAt Text--subdued" data-money-convertible>{{ product.compare_at_price | money_without_trailing_zeros }}</span>
             {%- elsif product.price_varies -%}
-              {%- capture formatted_min_price -%}<span data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_2" data-override-value-set="1" data-override-value="{{ product.price_min }}" style="display:none !important;"></span>{{ product.price_min | money_without_trailing_zeros }}</span>{%- endcapture -%}
-              {%- capture formatted_max_price -%}<span data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_3" data-override-value-set="1" data-override-value="{{ product.price_max }}" style="display:none !important;"></span>{{ product.price_max | money_without_trailing_zeros }}</span>{%- endcapture -%}
+              {%- capture formatted_min_price -%}<span data-money-convertible>{{ product.price_min | money_without_trailing_zeros }}</span>{%- endcapture -%}
+              {%- capture formatted_max_price -%}<span data-money-convertible>{{ product.price_max | money_without_trailing_zeros }}</span>{%- endcapture -%}
               <span class="ProductItem__Price Price Text--subdued">{{ 'collection.product.from_price_html' | t: min_price: formatted_min_price, max_price: formatted_max_price }}</span>
             {%- else -%}
-              <span class="ProductItem__Price Price Text--subdued" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_product_price_4" data-override-value-set="1" data-override-value="{{ product.price }}" style="display:none !important;"></span>{{ product.price | money_without_trailing_zeros }}</span>
+              <span class="ProductItem__Price Price Text--subdued" data-money-convertible>{{ product.price | money_without_trailing_zeros }}</span>
             {%- endif -%}
           </div>
         {%- endif -%}

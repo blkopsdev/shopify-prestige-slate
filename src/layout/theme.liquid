@@ -39,8 +39,6 @@
 
   {{ content_for_header }}
 
-	{%- include 'bold-common' -%}
-
     <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
 
     <script>
@@ -116,6 +114,7 @@
     <script src="https://cdn.polyfill.io/v3/polyfill.min.js?unknown=polyfill&features=fetch,Element.prototype.closest,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,Object.assign,CustomEvent,IntersectionObserver,IntersectionObserverEntry" defer></script>
     <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'slick.min.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
     {% include 'microdata-schema' %}
@@ -317,7 +316,7 @@ var google_remarketing_only = true;
 			});
 	  }}});
 </script>
-<!-- google dynamic remarketing tag for theme.liquid StoreYa End -->{%- include 'bold-currency-converter' -%}
+<!-- google dynamic remarketing tag for theme.liquid StoreYa End -->
 <!--Gorgias Chat Widget Start--><div id="gorgias-chat">{% if customer %}<script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% else %}<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% endif %}<script src="https://config.gorgias.io/production/QBGoD2eZAp7djqlX/chat/bVpA37lD1W7J5oEd.js" defer></script></div><!--Gorgias Chat Widget End--><!-- Begin ReCharge code -->
 {% include 'subscription-theme-footer' %}
 <!-- End ReCharge code -->
