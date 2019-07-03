@@ -153,10 +153,8 @@ var slideObserver = new MutationObserver(function(mutations) {
       
       // here you can play with it now :)
       if (mutation.target.getAttribute('aria-hidden') == "true") {
-        console.log('XXXXX ok. aria-hidden is true')  
         pageContent.classList.remove("blur");
       } else {
-        console.log('XXXXX :s aria-hidden is false')  
         pageContent.classList.add("blur");
       }      
     }

@@ -49,19 +49,14 @@
           {%- endif -%}
 
           <div class="CartItem__PriceList">
-<<<<<<< HEAD
             {%- if line_item.original_price != line_item.final_price -%}
               <span class="CartItem__Price Price Price--highlight" data-money-convertible>{{ line_item.final_price | money_without_trailing_zeros }}</span>
-=======
-            {%- if line_item.original_price > line_item.final_price -%}
-              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
->>>>>>> 54063e8078bd9bc69ce4a9c025b00373a11c5f3c
               <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.original_price | money_without_trailing_zeros }}</span>
             {%- else -%}
               <span class="CartItem__Price Price" data-money-convertible>{{ line_item.final_price | money_without_trailing_zeros }}</span>
             {%- endif -%}
 
-            {%- comment -%}
+            {% comment %}
             {%- if line_item.line_level_discount_allocations != blank -%}
               <ul class="CartItem__DiscountList">
                 {%- for discount_allocation in line_item.line_level_discount_allocations -%}
@@ -71,7 +66,7 @@
                 {%- endfor -%}
               </ul>
             {%- endif -%}
-            {%- endcomment -%}
+            {% endcomment %}
           </div>
         </div>
 

@@ -1,9 +1,5 @@
 <div class="ProductItem {% if use_horizontal %}ProductItem--horizontal{% endif %}">
   <div class="ProductItem__Wrapper">
-    {%- comment -%}
-    We are using LazySizes to efficiently choose the most appropriate image in the set. However, because internally LazySizes uses srcset, we need to make
-    sure that the image sizes we offer is not larger than the max size uploaded by the merchants.
-    {%- endcomment -%}
 
     {%- if settings.product_image_size == 'natural' or use_horizontal -%}
       {%- assign use_natural_size = true -%}
@@ -25,10 +21,6 @@
       {%- endif -%}
 
       <div class="AspectRatio AspectRatio--{% if use_natural_size %}withFallback{% else %}{{ settings.product_image_size }}{% endif %}" style="max-width: {{ max_width }}px; {% if use_natural_size %}padding-bottom: {{ 100.0 | divided_by: product.featured_image.aspect_ratio }}%;{% endif %} --aspect-ratio: {{ product.featured_image.aspect_ratio }}">
-        {%- comment -%}
-        IMPLEMENTATION NOTE: The alternate image (not visible by default) should be the first in the DOM, as the spinner (Image__Loader element) is
-        displayed based on the immediately previously shown image.
-        {%- endcomment -%}
 
         {%- if has_alternate_image -%}
           {%- include 'image-size', sizes: '200,300,400,600,800,900,1000,1200', image: product.images[1] -%}
