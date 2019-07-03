@@ -7,10 +7,10 @@
 <div class="Cart__ItemList">
   {%- unless for_drawer -%}
     <div class="Cart__Head hidden-phone">
-      <span class="Cart__HeadItem Heading Text--subdued u-h7">Product</span>
+      <span class="Cart__HeadItem Heading Text--subdued u-h7">{{ 'cart.items.product' | t }}</span>
       <span class="Cart__HeadItem"></span>
-      <span class="Cart__HeadItem Heading Text--subdued u-h7" style="text-align: center">Quantity</span>
-      <span class="Cart__HeadItem Heading Text--subdued u-h7" style="text-align: right">Total</span>
+      <span class="Cart__HeadItem Heading Text--subdued u-h7" style="text-align: center">{{ 'cart.items.quantity' | t }}</span>
+      <span class="Cart__HeadItem Heading Text--subdued u-h7" style="text-align: right">{{ 'cart.items.total' | t }}</span>
     </div>
   {%- endunless -%}
 
@@ -41,22 +41,32 @@
               {%- for property in line_item.properties -%}
                 {%- assign first_character_in_key = property.first | truncate: 1, '' -%}
 
-                {%- if property.last == blank or first_character_in_key == '_' -%}
-                  {%- continue -%}
-                {%- endif -%}
-
-                <li class="CartItem__Property">{{ property.first }}: {{ property.last }}</li>
+                {% unless property.last == blank or property.first == 'subscription_id' or property.first == 'shipping_interval_frequency' or property.first == 'shipping_interval_unit_type'%}
+                  <li class="CartItem__Property">{{ property.first }}: {{ property.last }}</li>
+                {% endunless %}
               {%- endfor -%}
             </ul>
           {%- endif -%}
 
           <div class="CartItem__PriceList">
-            {%- if line_item.original_price > line_item.price -%}
-              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+            {%- if line_item.original_price > line_item.final_price -%}
+              <span class="CartItem__Price Price Price--highlight" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
               <span class="CartItem__OriginalPrice Price Price--compareAt" data-money-convertible>{{ line_item.original_price | money_without_trailing_zeros }}</span>
             {%- else -%}
-              <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price_2" style="display:none !important;"></span>{{ line_item.price | money_without_trailing_zeros }}</span>
+              <span class="CartItem__Price Price" data-money-convertible><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price" style="display:none !important;"></span>{{ line_item.final_price | money_without_trailing_zeros }}</span>
             {%- endif -%}
+
+            {%- comment -%}
+            {%- if line_item.line_level_discount_allocations != blank -%}
+              <ul class="CartItem__DiscountList">
+                {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                  <li class="CartItem__Discount">
+                    {%- include 'icon' with 'sale' -%}{{ discount_allocation.discount_application.title }}: -{{ discount_allocation.amount | money }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+            {%- endcomment -%}
           </div>
         </div>
 
@@ -90,7 +100,7 @@
       {%- unless for_drawer -%}
         {{ item_actions }}
 
-        <span class="CartItem__LinePrice Price Heading Text--subdued u-h7" data-money-convertible style="text-align: right"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
+        <span class="CartItem__LinePrice CartItem__LinePriceList Price Heading Text--subdued u-h7" data-money-convertible style="text-align: right"><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_total" style="display:none !important;"></span>{{ line_item.line_price | money_without_trailing_zeros }}</span>
       {%- endunless -%}
     </div>
 

@@ -5,17 +5,11 @@
     "@type": "Product",
     "offers": {
       "@type": "Offer",
-      "availability": {%- if product.available -%}"//schema.org/InStock"{%- else -%}"//schema.org/OutOfStock"{%- endif -%},
+      "availability": {%- if product.available -%}"https://schema.org/InStock"{%- else -%}"https://schema.org/OutOfStock"{%- endif -%},
       "price": {{ product.price_min | money_without_currency | json }},
-      "priceCurrency": {{ shop.currency | json }}
-    }	
-	{% if product.metafields.okend0.RatingAndReviewCount > 0 %}
-    ,"aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "{{ product.metafields.okendo.ReviewAverageValue }}",
-      "ratingCount": "{{ product.metafields.okendo.RatingAndReviewCount }}"
-    }
-    {% endif %},
+      "priceCurrency": {{ shop.currency | json }},
+      "url": "{{ shop.url }}{{ product.url }}"
+    },
     "brand": {{ product.vendor | json }},
     "name": {{ product.title | json }},
     "description": {{ product.description | strip_html | json }},

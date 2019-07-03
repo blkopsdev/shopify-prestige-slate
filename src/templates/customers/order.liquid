@@ -27,7 +27,7 @@
       <p class="SectionHeader__Description">{{ 'customer.order.placed_at' | t: date: placed_at }}</p>
 
       {%- if order.cancelled -%}
-        {%- assign cancelled_at = order.cancelled_at | date: format: 'month_day_year_at_time' -%}
+        {%- assign cancelled_at = order.cancelled_at | date: format: 'month_day_year_time' -%}
         <p class="Alert Alert--large Alert--error">{{ 'customer.order.cancelled_at' | t: date: cancelled_at }}</p>
       {%- endif -%}
 
@@ -93,11 +93,21 @@
                       {%- endif -%}
 
                       <div class="CartItem__PriceList">
-                        {%- if line_item.original_price > line_item.price -%}
-                          <span class="CartItem__Price Price Price--highlight">{{ line_item.price | money_without_trailing_zeros }}</span>
+                        {%- if line_item.original_price != line_item.final_price -%}
+                          <span class="CartItem__Price Price Price--highlight">{{ line_item.final_price | money_without_trailing_zeros }}</span>
                           <span class="CartItem__OriginalPrice Price Price--compareAt">{{ line_item.original_price | money_without_trailing_zeros }}</span>
                         {%- else -%}
-                          <span class="CartItem__Price Price">{{ line_item.price | money_without_trailing_zeros }}</span>
+                          <span class="CartItem__Price Price">{{ line_item.final_price | money_without_trailing_zeros }}</span>
+                        {%- endif -%}
+
+                        {%- if line_item.line_level_discount_allocations != blank -%}
+                          <ul class="CartItem__DiscountList">
+                            {%- for discount_allocation in line_item.line_level_discount_allocations -%}
+                              <li class="CartItem__Discount">
+                                {%- include 'icon' with 'sale' -%}{{ discount_allocation.discount_application.title }}: -{{ discount_allocation.amount | money }}
+                              </li>
+                            {%- endfor -%}
+                          </ul>
                         {%- endif -%}
                       </div>
                     </div>
@@ -106,7 +116,14 @@
 
                 <td class="Text--alignCenter Heading Text--subdued hidden-phone">{{ line_item.quantity }}</td>
 
-                <td class="Text--alignRight Heading Text--subdued">{{ line_item.line_price | money_without_trailing_zeros }}</td>
+                <td class="Text--alignRight Heading Text--subdued">
+                  {%- if line_item.original_line_price != line_item.final_line_price -%}
+                    <span class="CartItem__Price Price Price--highlight">{{ line_item.final_line_price | money_without_trailing_zeros }}</span>
+                    <span class="CartItem__OriginalPrice Price Price--compareAt">{{ line_item.original_line_price | money_without_trailing_zeros }}</span>
+                  {%- else -%}
+                    <span class="CartItem__Price Price">{{ line_item.final_line_price | money_without_trailing_zeros }}</span>
+                  {%- endif -%}
+                </td>
               </tr>
 
               {%- if line_item.fulfillment and has_one_fulfillment == false -%}
@@ -120,19 +137,19 @@
           </tbody>
 
           <tfoot>
-            {%- for discount in order.discounts -%}
-              <tr>
-                <td class="hidden-phone"></td>
-                <td><span class="Heading Text--subdued u-h7">{{ 'customer.order.discount' | t }}</span> <span class="Text--subdued">({{ discount.code }})</span></td>
-                <td class="Heading Text--subdued Text--alignRight u-h7">{{ discount.savings | money_without_trailing_zeros }}</td>
-              </tr>
-            {%- endfor -%}
-
             <tr>
               <td class="hidden-phone"></td>
               <td class="Heading Text--subdued u-h7">{{ 'customer.order.subtotal' | t }}</td>
-              <td class="Heading Text--subdued Text--alignRight u-h7">{{ order.subtotal_price | money_without_trailing_zeros }}</td>
+              <td class="Heading Text--subdued Text--alignRight u-h7">{{ order.line_items_subtotal_price | money_without_trailing_zeros }}</td>
             </tr>
+
+            {%- for discount_application in order.cart_level_discount_applications -%}
+              <tr>
+                <td class="hidden-phone"></td>
+                <td><span class="Heading Text--subdued u-h7">{{ 'customer.order.discount' | t }}</span> <span class="Text--subdued">({{ discount_application.title }})</span></td>
+                <td class="Heading Text--subdued Text--alignRight u-h7">-{{ discount_application.total_allocated_amount | money_without_trailing_zeros }}</td>
+              </tr>
+            {%- endfor -%}
 
             {%- for shipping_method in order.shipping_methods -%}
               <tr>

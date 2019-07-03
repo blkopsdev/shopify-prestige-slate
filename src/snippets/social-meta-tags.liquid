@@ -22,8 +22,8 @@ Validate your Pinterest rich pins
     <meta property="og:image:secure_url" content="https:{{ image.src | img_url: 'grande' }}">
   {%- endfor -%}
 
-  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html | escape }}">
-  <meta property="og:price:currency" content="{{ shop.currency }}">
+  <meta property="product:price:amount" content="{{ product.price | money_without_currency | strip_html | escape }}">
+  <meta property="product:price:currency" content="{{ shop.currency }}">
 {%- elsif template.name == 'article' -%}
   <meta property="og:type" content="article">
   <meta property="og:title" content="{{ article.title | strip_html | escape }}">

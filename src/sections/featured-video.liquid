@@ -22,13 +22,13 @@
       </div>
 
       <div class="ImageHero__ContentOverlay">
-        <header class="SectionHeader"> 
-          {%- if section.settings.title != blank -%}
-            <h2 class="SectionHeader__Heading Heading u-h1">{{ section.settings.title | escape }}</h2>
-          {%- endif -%}
-
+        <header class="SectionHeader">
           {%- if section.settings.subheading != blank -%}
             <h3 class="SectionHeader__SubHeading Heading u-h6">{{ section.settings.subheading | escape }}</h3>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            <h2 class="SectionHeader__Heading Heading u-h1">{{ section.settings.title | escape }}</h2>
           {%- endif -%}
 
           <div class="SectionHeader__IconHolder">
@@ -46,7 +46,7 @@
       <div class="VideoWrapper">
         {% if section.settings.video_url.type == 'youtube' %}
           <iframe class="Image--lazyLoad" data-src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?autoplay=1&showinfo=0&controls=1&rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
-          {% elsif section.settings.video_url.type == 'vimeo' %}
+        {% elsif section.settings.video_url.type == 'vimeo' %}
           <iframe class="Image--lazyLoad" data-src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay=1&portrait=0&byline=0&color={{ settings.accent_color | remove_first: '#' }}" frameborder="0"></iframe>
         {% endif %}
       </div>
@@ -108,7 +108,7 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image",
-      "info": "1500 x 800px jpg recommended."
+      "info": "1500 x 800px .jpg recommended."
     },
     {
       "type": "video_url",

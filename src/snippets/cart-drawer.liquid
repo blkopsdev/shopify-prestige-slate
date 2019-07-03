@@ -30,7 +30,7 @@
             {%- if cart.total_price >= threshold_in_cents -%}
               <p>{{- 'cart.general.free_shipping' | t -}}</p>
             {%- else -%}
-              {%- capture remaining_amount -%}<span>{{ cart.total_price | minus: threshold_in_cents | abs | money_without_trailing_zeros }}</span>{%- endcapture -%}
+              {%- capture remaining_amount -%}<span data-money-convertible>{{ cart.total_price | minus: threshold_in_cents | abs | money_without_trailing_zeros }}</span>{%- endcapture -%}
               <p>{{- 'cart.general.free_shipping_remaining_html' | t: remaining_amount: remaining_amount -}}</p>
             {%- endif -%}
           </div>
@@ -63,7 +63,13 @@
           {%- endif -%}
 
           {%- if shipping_and_taxes_notice != blank -%}
-            <span class="Cart__Taxes Text--subdued">{{ shipping_and_taxes_notice }}</span>
+            <p class="Cart__Taxes Text--subdued">{{ shipping_and_taxes_notice }}</p>
+          {%- endif -%}
+
+          {%- if cart.cart_level_discount_applications != blank -%}
+            {%- for discount_application in cart.cart_level_discount_applications -%}
+              <p class="Cart__Discount">{%- include 'icon' with 'sale' -%} {{ 'cart.general.discount' | t }} ({{ discount_application.title }}): -<span data-money-convertible>{{ discount_application.total_allocated_amount | money_without_trailing_zeros }}</span></p>
+            {%- endfor -%}
           {%- endif -%}
         {%- endif -%}
 
