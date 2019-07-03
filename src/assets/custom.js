@@ -57,58 +57,50 @@ window.addEventListener("scroll", function(){ // or window.addEventListener("scr
 }, false);
 
  // Testimonial Slider Start
-  
-   jQuery('.single-item2').slick({
-				
-				infinite: true,
-				
-				speed: 300,
-
-				autoplay: true,
-
-  				autoplaySpeed: 2000,
-
+ 
+   	jQuery('.single-item2').slick({
+		infinite: true,
+		speed: 300,
+		autoplay: true,
+		autoplaySpeed: 2000,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		arrows: false,
+		dots: true,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
 				slidesToShow: 1,
-				
 				slidesToScroll: 1,
-     
-      			arrows: false,
-     			dots: true,
-				
-				responsive: [
-				    {
-				      breakpoint: 1024,
-				      settings: {
-				        slidesToShow: 1,
-				        slidesToScroll: 1,
-				        infinite: true,
-                        arrows: false,
-				        dots: true
-				      }
-				    },
-				    {
-				      breakpoint: 600,
-				      settings: {
-				        slidesToShow: 1,
-                        arrows: false,
-				        slidesToScroll: 1,
-                        dots: true
-				      }
-				    },
-				    {
-				      breakpoint: 480,
-				      settings: {
-				        slidesToShow: 1,
-                        arrows: false,
-				        slidesToScroll: 1,
-                        dots: true
-				      }
-				    }
-				    // You can unslick at a given breakpoint now by adding:
-				    // settings: "unslick"
-				    // instead of a settings object
-				]				
-			
-			}); 
+				infinite: true,
+				arrows: false,
+				dots: true
+				}
+			},
+			{
+				breakpoint: 600,
+				settings: {
+				slidesToShow: 1,
+				arrows: false,
+				slidesToScroll: 1,
+				dots: true
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+				slidesToShow: 1,
+				arrows: false,
+				slidesToScroll: 1,
+				dots: true
+				}
+			}
+			// You can unslick at a given breakpoint now by adding:
+			// settings: "unslick"
+			// instead of a settings object
+		]				
+	
+	}); 
   // Testimonial Slider End
   

@@ -13,7 +13,6 @@ var ajaxLinkUrl = 'https://modapps.com.au/geolocationredirect/assets/geo/vitacle
                 Storage.prototype._setItem = Storage.prototype.setItem;
                 Storage.prototype.setItem = function () { };
                 safariBrowserCompatibility = false;
-                console.log('Sorry, your browser does not support web storage...');
             }
             if (safariBrowserCompatibility) {
                 if (window.sessionStorage.geoJsCodeTxt) {
@@ -25,7 +24,6 @@ var ajaxLinkUrl = 'https://modapps.com.au/geolocationredirect/assets/geo/vitacle
     } else {
             safariBrowserCompatibility = false;
             sessionStCall = false;
-            console.log('Sorry, your browser does not support web storage...');
         }
 if(sessionStCall){
           var s = document.createElement('script');
@@ -71,8 +69,7 @@ modBarjquery.ajax({
                         document.getElementsByTagName('head')[0].appendChild(s);
 
                     } }, 
-          error: function (data) 
-            { console.log('Cannot load service from server'); }
+          error: function (data) { }
     });
 }
 </script> 
