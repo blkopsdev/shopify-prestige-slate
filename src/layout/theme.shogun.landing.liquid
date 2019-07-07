@@ -39,8 +39,7 @@ This file can be re-written at any time.
     {%- endif -%}
 
     {% include 'social-meta-tags' %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
 
     {{ content_for_header }}
 
@@ -103,7 +102,7 @@ This file can be re-written at any time.
       
     </script>
 
-    <script src="{{ 'lazysizes.min.js' | asset_url }}" async></script>
+    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
 
     {% comment %} Yotpo content removed from here {% endcomment %}
 
@@ -111,18 +110,12 @@ This file can be re-written at any time.
       <script src="//cdn.shopify.com/s/javascripts/currencies.js" defer></script>
     {% endif %}
 
-    {%- if template == 'customers/addresses' -%}
-      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
-      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
-    {%- endif -%}
-
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Element.prototype.closest,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,Object.assign,CustomEvent,IntersectionObserver,IntersectionObserverEntry" defer></script>
     <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
     <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
     {% include 'microdata-schema' %}
-    
   
   {% include 'shogun-head' %}
 
@@ -238,8 +231,8 @@ var google_custom_params = window.google_tag_params;
 var google_remarketing_only = true;
 /* ]]> */
 </script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" defer></script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js" defer></script>
 <script  type="text/javascript">
   $(document).ajaxSuccess(function(event, xhr, settings) {
 	if (settings.url == "/cart/add.js" || settings.url == "/cart/update.js"){	  

@@ -204,7 +204,7 @@ body[class*="prestige"] form[data-productid="{{ product.id }}"] [type="submit"] 
 			{% if show_widget %}
 				<div class="rc_popup__hover">
 					{% if show_widget_icon %}
-						<img src="{{ widget_icon }}" height="21" width="18" class="rc_popup__icon">
+						<img src="{{ 'rc_widget__icon__black.png' | asset_img_url }}" height="21" width="18" class="rc_popup__icon">
 					{% endif %}
 					{{ subscription_details_label }}
 					<div class="rc_popup__block">
@@ -215,6 +215,7 @@ body[class*="prestige"] form[data-productid="{{ product.id }}"] [type="submit"] 
 								<br><a href="{{ learnmore_url }}" target="_blank">{{ learnmore_link }}</a>
 							{% endif %}
 						</div>
+						{% comment %}
 						{% if show_poweredby %}
 							<div class="rc_popup__block__footer">
 								<a href="{{ poweredby_url }}" target="_blank">
@@ -222,15 +223,16 @@ body[class*="prestige"] form[data-productid="{{ product.id }}"] [type="submit"] 
 								</a>
 							</div>
 						{% endif %}
+						{% endcomment %}
 					</div>
 				</div>
 			{% elsif show_widget == "link" %}
-				<a href="{{ learnmore_url }}" target="_blank" class="rc_popup__hover">{% if show_widget_icon %}<img src="{{ widget_icon }}" height="21" width="18" class="rc_popup__icon"> {% endif %}{{ subscription_details_label }}</a>
+				<a href="{{ learnmore_url }}" target="_blank" class="rc_popup__hover">{% if show_widget_icon %}<img src="{{ 'rc_widget__icon__black.png' | asset_img_url }}" height="21" width="18" class="rc_popup__icon"> {% endif %}{{ subscription_details_label }}</a>
 			{% endif %}
 		</div>
 	</div>
 	<!-- Subscriptions Powered by ReCharge Payments: JS -->
-    <script src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/js/rcWidget.js"></script>
+    <script src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/js/rcWidget.js" defer></script>
 	<script>
 		(function() {
 			var options = {
