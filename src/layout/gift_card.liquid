@@ -21,9 +21,9 @@
 
     {% include 'social-meta-tags' %}
 
+    <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
     {{ content_for_header }}
 
-    <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
 
     <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
     <script src="{{ 'theme.min.js' | asset_url }}" defer></script>

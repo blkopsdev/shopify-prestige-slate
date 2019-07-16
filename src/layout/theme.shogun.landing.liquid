@@ -10,7 +10,7 @@ This file can be re-written at any time.
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <meta name="theme-color" content="{{ settings.accent_color }}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> {% endcomment %}
    
     <title>
       {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
@@ -25,25 +25,30 @@ This file can be re-written at any time.
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.com' }}" hreflang="en-us" />
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" hreflang="en-gb" />
   
-	<style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
-	<script>(function(g,e,o,t,l,y,s){
-	s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
-	var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
-	y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
-	l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
-	setTimeout(function(){s();}, 3000);})(document,'script','style','head');
-	</script>
+	
   
     {%- if settings.favicon -%}
       <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
     {%- endif -%}
 
     <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
-    <script src="{{ 'jquery.min.js' | asset_url }}" async></script>
 
     {% include 'social-meta-tags' %}
 
     {{ content_for_header }}
+    <script src="{{ 'jquery.min.js' | asset_url }}" async></script>
+
+    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
+
+    {% comment %} Yotpo content removed from here {% endcomment %}
+
+    {% if settings.currency_conversion_enabled %}
+      <script src="{{ 'currencies.js' | asset_url }}" defer></script>
+    {% endif %}
+
+    <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
 
 
     <script>
@@ -102,19 +107,15 @@ This file can be re-written at any time.
 
       
     </script>
-
-    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
-
-    {% comment %} Yotpo content removed from here {% endcomment %}
-
-    {% if settings.currency_conversion_enabled %}
-      <script src="{{ 'currencies.js' | asset_url }}" defer></script>
-    {% endif %}
-
-    <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'custom.js' | asset_url }}" defer></script>
-
+    <style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
+    <script>(function(g,e,o,t,l,y,s){
+    s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
+    var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
+    y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
+    l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
+    setTimeout(function(){s();}, 3000);})(document,'script','style','head');
+    </script>
+    
     {% include 'microdata-schema' %}
   
   {% include 'shogun-head' %}
@@ -164,7 +165,7 @@ ATCbutton[i].addEventListener('click', function() {pintrk('track', 'addtocart')}
 
   
   
-<body class="prestige--v1 {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }}">
+<body class="prestige--v4 {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }}">
   
   
   {{ content_for_layout }}
