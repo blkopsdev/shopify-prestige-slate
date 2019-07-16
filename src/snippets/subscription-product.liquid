@@ -104,7 +104,7 @@
 			{% capture poweredby_url %}http://rechargepayments.com/subscribe-with-recharge?utm_source=shopify%20store&utm_medium=customer%20link&utm_campaign=Shopify%20store%20back%20link&shop_name={{ shop.name | url_param_escape }}&shop={{ shop.permanent_domain }}{% endcapture %}
 		{% endif %}
 	<!-- Subscriptions Powered by ReCharge Payments: CSS -->
-	<link href="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/css/rcWidget.css" rel="stylesheet" type="text/css">
+	<link href="{{ 'rcWidget.css' | asset_url }}" rel="stylesheet" type="text/css">
 	<style>
 		/* Widget: Purchase options */
 		label.rc_label {
@@ -232,7 +232,7 @@ body[class*="prestige"] form[data-productid="{{ product.id }}"] [type="submit"] 
 		</div>
 	</div>
 	<!-- Subscriptions Powered by ReCharge Payments: JS -->
-    <script src="//rechargeassets-bootstrapheroes-rechargeapps.netdna-ssl.com/static/js/rcWidget.js" defer></script>
+    <script src="{{ 'rcWidget.js' | asset_url }}" defer></script>
 	<script>
 		(function() {
 			var options = {

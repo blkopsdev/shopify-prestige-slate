@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <meta name="theme-color" content="{{ settings.accent_color }}">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> {% endcomment %}
    
     <title>
       {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
@@ -20,24 +20,34 @@
 	<link rel="alternate" hreflang="x-default" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" />
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.com' }}" hreflang="en-us" />
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" hreflang="en-gb" />
-  <style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
-	<script>(function(g,e,o,t,l,y,s){
-	s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
-	var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
-	y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
-	l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
-	setTimeout(function(){s();}, 3000);})(document,'script','style','head');
-	</script>
+
   
   {%- if settings.favicon -%}
     <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
   {%- endif -%}
 
   {% include 'social-meta-tags' %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
-
+  
+  <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
+  
   {{ content_for_header }}
+  <script src="{{ 'jquery.min.js' | asset_url }}" async></script>
 
+
+    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
+
+    {% if settings.currency_conversion_enabled %}
+      <script src="{{ 'currencies.js' | asset_url }}" defer></script>
+    {% endif %}
+
+    <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
+    {% include 'microdata-schema' %}
+    
+  
+  {% include 'shogun-head' %}
     <script>
       // This allows to expose several variables to the global scope, to be used in scripts
       window.theme = {
@@ -94,25 +104,15 @@
 
       
     </script>
-
-    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
-
-    {% comment %} Yotpo content removed from here {% endcomment %}
-
-    {% if settings.currency_conversion_enabled %}
-      <script src="//cdn.shopify.com/s/javascripts/currencies.js" defer></script>
-    {% endif %}
-
-    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?unknown=polyfill&features=fetch,Element.prototype.closest,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,Object.assign,CustomEvent,IntersectionObserver,IntersectionObserverEntry" defer></script>
-    <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'custom.js' | asset_url }}" defer></script>
-
-    {% include 'microdata-schema' %}
-    
   
-  {% include 'shogun-head' %}
-  <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
+    <style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
+	<script>(function(g,e,o,t,l,y,s){
+	s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
+	var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
+	y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
+	l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
+	setTimeout(function(){s();}, 3000);})(document,'script','style','head');
+	</script>
 <!-- Pinterest Tag -->
 <script>
 !function(e){if(!window.pintrk){window.pintrk = function () {
@@ -120,7 +120,7 @@ window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
       n=window.pintrk;n.queue=[],n.version="3.0";var
       t=document.createElement("script");t.async=!0,t.src=e;var
       r=document.getElementsByTagName("script")[0];
-      r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+      r.parentNode.insertBefore(t,r)}}("{{ 'core.js' | asset_url }}");
 pintrk('load', '2614248711405', {em: '<user_email_address>'});
 pintrk('page');
 </script>
@@ -275,8 +275,8 @@ var google_custom_params = window.google_tag_params;
 var google_remarketing_only = true;
 /* ]]> */
 </script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js" defer></script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js" defer></script>
+<script type="text/javascript" src="{{ 'conversion.js' | asset_url }}"></script>
+<script type="text/javascript" src="{{ 'conversion_async.js' | asset_url }}" defer></script>
 <noscript>
 <div style="display:inline;">
 <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/826194626/?guid=ON&amp;script=0"/>
@@ -308,7 +308,7 @@ var google_remarketing_only = true;
 	  }}});
 </script>
 <!-- google dynamic remarketing tag for theme.liquid StoreYa End -->
-<!--Gorgias Chat Widget Start--><div id="gorgias-chat">{% if customer %}<script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% else %}<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% endif %}<script src="https://config.gorgias.io/production/QBGoD2eZAp7djqlX/chat/bVpA37lD1W7J5oEd.js" defer></script></div><!--Gorgias Chat Widget End-->
+<!--Gorgias Chat Widget Start--><div id="gorgias-chat">{% if customer %}<script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% else %}<script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>{% endif %}<script src="{{ 'gorgias.js' | asset_url }}" defer></script></div><!--Gorgias Chat Widget End-->
 <!-- Begin ReCharge code -->
 {% include 'subscription-theme-footer' %}
 <!-- End ReCharge code -->
