@@ -10,7 +10,7 @@ This file can be re-written at any time.
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
     <meta name="theme-color" content="{{ settings.accent_color }}">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    {% comment %} <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> {% endcomment %}
    
     <title>
       {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
@@ -25,26 +25,31 @@ This file can be re-written at any time.
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.com' }}" hreflang="en-us" />
 	<link rel="alternate" href="{{ canonical_url | replace: shop.domain, 'vitacleanhq.co.uk' }}" hreflang="en-gb" />
   
-	<style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
-	<script>(function(g,e,o,t,l,y,s){
-	s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
-	var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
-	y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
-	l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
-	setTimeout(function(){s();}, 3000);})(document,'script','style','head');
-	</script>
+	
   
     {%- if settings.favicon -%}
       <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
     {%- endif -%}
 
+    <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
+
     {% include 'social-meta-tags' %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 
     {{ content_for_header }}
+    <script src="{{ 'jquery.min.js' | asset_url }}" async></script>
 
-    <link rel="stylesheet" href="{{ 'theme.scss.css' | asset_url }}">
+    <script src="{{ 'lazysizes.min.js' | asset_url }}" defer></script>
+
+    {% comment %} Yotpo content removed from here {% endcomment %}
+
+    {% if settings.currency_conversion_enabled %}
+      <script src="{{ 'currencies.js' | asset_url }}" defer></script>
+    {% endif %}
+
+    <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
 
     <script>
       
@@ -102,27 +107,16 @@ This file can be re-written at any time.
 
       
     </script>
-
-    <script src="{{ 'lazysizes.min.js' | asset_url }}" async></script>
-
-    {% comment %} Yotpo content removed from here {% endcomment %}
-
-    {% if settings.currency_conversion_enabled %}
-      <script src="//cdn.shopify.com/s/javascripts/currencies.js" defer></script>
-    {% endif %}
-
-    {%- if template == 'customers/addresses' -%}
-      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
-      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
-    {%- endif -%}
-
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Element.prototype.closest,Element.prototype.remove,Element.prototype.classList,Array.prototype.includes,Array.prototype.fill,Object.assign,CustomEvent,IntersectionObserver,IntersectionObserverEntry" defer></script>
-    <script src="{{ 'libs.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'theme.min.js' | asset_url }}" defer></script>
-    <script src="{{ 'custom.js' | asset_url }}" defer></script>
-
-    {% include 'microdata-schema' %}
+    <style id='georedirect1558530896487style'>body{opacity:0.0 !important;}</style>
+    <script>(function(g,e,o,t,l,y,s){
+    s = function(){g.getElementById('georedirect1558530896487style').innerHTML='body{opacity:1.0 !important;}';};
+    var l=g.getElementsByTagName(e)[0],y=g.createElement(e); y.async=true;
+    y.src='//geotargetly-1a441.appspot.com/georedirect?id=-LfUfY7GQnY_wDOik01e&refurl='+g.referrer+'&winurl='+encodeURIComponent(window.location);
+    l.parentNode.insertBefore(y,l); georedirect1558530896487loaded = function(redirect){var to=0;if(redirect){to=500};setTimeout(function(){s();}, to)};
+    setTimeout(function(){s();}, 3000);})(document,'script','style','head');
+    </script>
     
+    {% include 'microdata-schema' %}
   
   {% include 'shogun-head' %}
 
@@ -133,7 +127,7 @@ window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
       n=window.pintrk;n.queue=[],n.version="3.0";var
       t=document.createElement("script");t.async=!0,t.src=e;var
       r=document.getElementsByTagName("script")[0];
-      r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+      r.parentNode.insertBefore(t,r)}}("{{ 'core.js' | asset_url }}");
 pintrk('load', '2614248711405', {em: '<user_email_address>'});
 pintrk('page');
 </script>
@@ -171,7 +165,7 @@ ATCbutton[i].addEventListener('click', function() {pintrk('track', 'addtocart')}
 
   
   
-<body class="prestige--v1 {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }}">
+<body class="prestige--v4 {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }}">
   
   
   {{ content_for_layout }}
@@ -238,8 +232,8 @@ var google_custom_params = window.google_tag_params;
 var google_remarketing_only = true;
 /* ]]> */
 </script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion_async.js"></script>
+<script type="text/javascript" src="{{ 'conversion.js' | asset_url }}" defer></script>
+<script type="text/javascript" src="{{ 'conversion_async.js' | asset_url }}" defer></script>
 <script  type="text/javascript">
   $(document).ajaxSuccess(function(event, xhr, settings) {
 	if (settings.url == "/cart/add.js" || settings.url == "/cart/update.js"){	  
@@ -267,7 +261,7 @@ var google_remarketing_only = true;
 </script>
 <script>window.gorgiasChatParameters = {"smooch": {"givenName": "{{ customer.name }}","email": "{{ customer.email }}","properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>
 <script>window.gorgiasChatParameters = {"smooch": {"properties": {"shopify__cart__total_price": "{{ cart.total_price | money | strip_html | default: null }}","shopify__cart__nb_of_items": {{ cart.items | size | default: 0 }},{% for item in cart.items %}"shopify__cart__items-{{ forloop.index }}-[]":"{\"line_price\":\"{{item.line_price|money|strip_html|default:null}}\",\"price\":\"{{item.price|money|strip_html|default:null}}\",\"product_id\":\"{{item.product_id|default:null}}\",\"quantity\":{{item.quantity|default:null}},\"sku\":\"{{item.sku|default:null}}\",\"title\":\"{{item.title}}\",\"variant_id\":{{item.variant_id|default:null}},\"vendor\":\"{{item.vendor|default:null}}\",\"id\":{{item.id|default:null}}}"{% if forloop.last != true %},{% endif %}{% endfor %}}}}</script>
-<script src="https://config.gorgias.io/production/QBGoD2eZAp7djqlX/chat/bVpA37lD1W7J5oEd.js" defer></script>
+<script src="{{ 'gorgias.js' | asset_url }}" defer></script>
   <style type="text/css">
     body, html {
       width: 100% !important;

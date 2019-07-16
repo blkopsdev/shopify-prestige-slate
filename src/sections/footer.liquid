@@ -95,10 +95,7 @@
         {%- endif -%}
       {%- endif -%} {% endcomment %}
     {% comment %} </div> {% endcomment %}
-<style>
-  .methods-of-payment img { padding: 0.2em; }
-  .lt-ie9 .methods-of-payment, .ie8 .methods-of-payment, .oldie .methods-of-payment { display: none; }
-</style>
+
 <span class="methods-of-payment">
   <img src="{{ 'american_express' | payment_type_img_url }}" height="35" alt="american express" />
   <img src="{{ 'jcb' | payment_type_img_url }}" height="35" alt="jcb" />
