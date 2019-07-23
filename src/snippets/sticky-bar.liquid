@@ -1,0 +1,69 @@
+<a class="btn product-center-button sticky-buy-btn" id="sticky_buy_btn" href="javascript:void(0);">BUY IT NOW</a>
+
+<script>
+$(document).ready(function() {
+  if($("#rc_container").length ){
+    
+    
+    $("#sticky_buy_btn").click(function() {
+      var purchase_type = $("input[name='purchase_type']:checked").val();
+      if (purchase_type == 'onetime') {
+        var selected_variant = {{ product.selected_or_first_available_variant.id }};
+        var selected_qty = $(".ProductForm__QuantitySelector .QuantitySelector__CurrentQuantity").val();
+        var checkout_url = "https://vitacleanhq.com/cart/" + selected_variant + ":" + selected_qty;
+        window.location.href = checkout_url;  
+      } else {
+        var variant = $("#rc_container #rc_duplicate_selector").val();
+        var qty = $(".ProductForm__QuantitySelector .QuantitySelector__CurrentQuantity").val();
+        var frequency = $("#rc_container .rc_select__frequency").val();
+        addItemToCart(variant, qty, frequency, "Months", 39052);
+      }
+
+      function addItemToCart(variant_id, quantity, shipping_interval_frequency, shipping_interval_unit_type, subscription_id) {
+        data = {
+          "quantity": quantity,
+          "id": variant_id,
+          "properties[shipping_interval_frequency]": shipping_interval_frequency, 
+          "properties[shipping_interval_unit_type]": shipping_interval_unit_type,            
+          "properties[subscription_id]": subscription_id
+        };
+        jQuery.ajax({
+          type: 'POST',
+          url: '/cart/add.js',
+          data: data,
+          dataType: 'json',
+          success: function() { 
+            reChargeProcessCart();
+          }
+        });
+        {% comment %} window.location = '/checkout'; {% endcomment %}
+      }
+
+      function reChargeProcessCart() {
+        function get_cookie(name){ return( document.cookie.match('(^|; )'+name+'=([^;]*)')||0 )[2] }
+        do {
+                token=get_cookie('cart');
+        }
+        while(token == undefined);
+
+        var myshopify_domain='{{ shop.permanent_domain }}';
+        try { var ga_linker = ga.getAll()[0].get('linkerParam') } catch(err) { var ga_linker ='' };
+        var customer_param = '{% if customer %}customer_id={{customer.id}}&customer_email={{customer.email}}{% endif %}'
+        
+        checkout_url= "https://checkout.rechargeapps.com/r/checkout?myshopify_domain="+myshopify_domain+"&cart_token="+token+"&"+ga_linker+"&"+customer_param;
+            
+        window.location.href = checkout_url;
+      }
+    })
+    
+  } else{
+
+    $("#sticky_buy_btn").click(function() {
+      var selected_variant = {{ product.selected_or_first_available_variant.id }};
+      var selected_qty = $(".ProductForm__QuantitySelector .QuantitySelector__CurrentQuantity").val();
+      var checkout_url = "https://vitacleanhq.com/cart/" + selected_variant + ":" + selected_qty;
+      window.location.href = checkout_url;
+    });
+  }
+});
+</script>

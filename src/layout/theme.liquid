@@ -226,6 +226,21 @@ ATCbutton[i].addEventListener('click', function() {pintrk('track', 'addtocart')}
 		dynx_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
 		};
 	</script>
+  <style>
+    @media only screen and (max-width: 1023px) {
+      #gorgias-web-messenger-container {
+        bottom: 40px;
+      }
+      ._2TELtk5nDKlQudVSivRjpt ._2ChX4GFAl1-UBiWknYZyEQ {
+        height: -moz-calc(100% - 40px) !important;
+        height: -webkit-calc(100% - 40px) !important;
+        height: calc(100% - 40px) !important;
+      }
+      .filter-bar--footer {
+        bottom: 50px;
+      }
+    }
+  </style>
 {% elsif template contains 'collection' %}
 	<script type="text/javascript">
 		var google_tag_params = {
